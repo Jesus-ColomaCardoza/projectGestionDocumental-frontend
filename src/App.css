@@ -1,0 +1,12 @@
+.custom-scroll{
+    height: 50vh;
+    overflow-y: auto;
+}
+.custom-sticky{
+    position:sticky;
+    top: -.1em;
+    left: 0;
+}
+.custom-fixed{
+    position:fixed;
+}

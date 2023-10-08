@@ -1,0 +1,22 @@
+:root{
+    --blackfont:#F4F6F9;
+}
+.container{
+    min-height: 90vh;
+}
+.table-primary{
+    background-color: #aaa;
+}
+.container-list{
+    margin: 0 2em;
+    background-color: #fff;
+}
+.container-list__h2{
+    padding: .3em 1em;
+}
+.container-list__h3{
+    margin: 0;
+    padding: .5em;
+    border-bottom: .3em solid var(--blackfont) ;
+}
+

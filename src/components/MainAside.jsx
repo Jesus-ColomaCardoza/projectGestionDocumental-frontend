@@ -4,8 +4,8 @@ import logo from '../assets/img/AdminLTELogo.png'
 
 function MainAside() {
   return (
-
-      <aside className="main-sidebar sidebar-dark-primary elevation-4">
+      
+      <aside className="main-sidebar sidebar-dark-primary custom-fixed">
         {/* aside's header */}
         <Link to="/home" className="brand-link">
           <img src={logo} alt="AdminLTE Logo" className="brand-image img-circle elevation-3" />
