@@ -1,7 +1,24 @@
+import { useEffect, useState } from 'react';
 import '../stylesheets/Usuario.css'
-
+import { Link } from 'react-router-dom';
 
 function Usuario() {
+
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => { loadUsers() }, []);
+
+  const loadUsers = async () => {
+    const response = await fetch('http://localhost:3000/usuario/getlist');
+    const data = await response.json()
+    setUsers(data);
+    console.log(data);
+  }
+
+
+
+
+
   return (
 
     <div className='container'>
@@ -26,7 +43,7 @@ function Usuario() {
                 </ul>
                 <form className="d-flex" role="search">
                   <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                    <button className="btn btn-success" type="submit">Search</button>
+                  <button className="btn btn-success" type="submit">Search</button>
                 </form>
               </div>
             </div>
@@ -37,34 +54,42 @@ function Usuario() {
               <thead className='custom-sticky table-light'>
                 <tr>
                   <th scope="col">#</th>
-                  <th scope="col">First</th>
-                  <th scope="col">Last</th>
-                  <th scope="col">Handle</th>
+                  <th scope="col">Usuario</th>
+                  <th scope="col">Área</th>
+                  <th scope="col">Rol</th>
+                  <th scope="col">Empleado</th>
+                  <th scope="col">Estatus</th>
+                  <th scope="col">Optiones</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Mark</td>
-                  <td>Otto</td>
-                  <td>@mdo</td>
-                </tr>
-                <tr>
-                  <th scope="row">2</th>
-                  <td>Jacob</td>
-                  <td>Thornton</td>
-                  <td>@fat</td>
-                </tr>
-                <tr>
-                  <th scope="row">3</th>
-                  <td>Thornton</td>
-                  <td>@fat</td>
-                  <td>@twitter</td>
-                </tr>
-                
+                {
+                  users.map((user, index) => {
+                    return (
+                      <tr key={user.id}>
+                        <th scope="row">{index + 1}</th>
+                        <td>{user.user_name}</td>
+                        <td>{user.Area.area_name}</td>
+                        <td>{user.role}</td>
+                        <td>{user.Area.state}</td>
+                        <td>{user.state}</td>
+                        <td>
+                          <button type="button" className="btn btn-info mx-1">
+                            <Link>
+                              <i className="bi bi-pencil-fill text--white"></i>
+                            </Link>
+                          </button>
+                          <button type="button" className="btn btn-danger mx-1">
+                            <Link>
+                              <i className="bi bi-trash-fill text--white"></i>
+                            </Link>    
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })
+                }
               </tbody>
-
-
             </table>
           </div>
 
@@ -73,4 +98,5 @@ function Usuario() {
     </div>
   );
 }
+
 export default Usuario;

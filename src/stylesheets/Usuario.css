@@ -19,4 +19,6 @@
     padding: .5em;
     border-bottom: .3em solid var(--blackfont) ;
 }
-
+.text--white{
+    color: #fff;
+}
