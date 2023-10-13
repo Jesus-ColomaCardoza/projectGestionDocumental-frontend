@@ -14,11 +14,19 @@
 .container-list__h2{
     padding: .3em 1em;
 }
-.container-list__h3{
-    margin: 0;
-    padding: .5em;
-    border-bottom: .3em solid var(--blackfont) ;
-}
 .text--white{
     color: #fff;
+}
+
+/*container-list__header*/
+.container-list__header{
+    border-bottom: .5em solid var(--blackfont) ;
+    padding: 1em;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+.container-list__h3{
+    margin: 0;
 }

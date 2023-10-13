@@ -1,3 +1,7 @@
+:root{
+    --greenBootstrap:#28A745;
+    --redBootstrap:#DC3545;
+}
 .custom-scroll{
     height: 50vh;
     overflow-y: auto;
@@ -9,4 +13,19 @@
 }
 .custom-fixed{
     position:fixed;
+}
+
+/* highlighter */
+.highlighter{
+    padding: .15em .5em;
+    border-radius: .5em;
+    font-weight: bold;
+}
+.highlighter--green{
+    color: #fff;
+    background-color: var(--greenBootstrap);
+}
+.highlighter--red{
+    color: #fff;
+    background-color: var(--redBootstrap);
 }
