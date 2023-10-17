@@ -1,15 +1,18 @@
 import { useEffect, useState } from 'react';
 import '../stylesheets/Usuario.css'
 import { Link } from 'react-router-dom';
-import SearchNav from '../components/SearchNav';
-import Modal from '../components/Modal';
 import { useModal } from '../hookscustom/useModal';
+import Modal from '../components/Modal';
+import NavWithSearch from '../components/NavWithSearch';
+import HeaderWithButton from '../components/HeaderWithButton';
+import FormUser from '../components/FormUser';
 
 function Usuario() {
 
   const [users, setUsers] = useState([]);
   const [userName, setUserName] = useState('');
   const [modalAddUser, openModalAddUser, closeModalAddUser] = useModal(false);
+  const [modalUpdateUser, openModalUpdateUser, closeModalUpdateUser] = useModal(false);
 
   useEffect(() => { loadUsers() }, []);
   useEffect(() => { loadUsersByName() }, [userName]);
@@ -67,71 +70,61 @@ function Usuario() {
     })
   }
 
+
+  
+
   return (
 
     <div className='container'>
 
+      {/* Modals  */}
+      {/* add user Modal */}
       <Modal
         isOpen={modalAddUser}
         closeModal={closeModalAddUser}
       >
-        <h3 className='mb-4 text-center'>Nuevo Usuario</h3>
-        <form className="row g-3">
-          <div className="col-md-6">
-            <label for="inputEmail4" className="form-label">Usuario</label>
-            <input type="text" className="form-control" id="inputEmail4" />
-          </div>
-          <div className="col-md-6">
-            <label for="inputPassword4" className="form-label">Contraseña</label>
-            <input type="password" className="form-control" id="inputPassword4" />
-          </div>
-          <div className="col-md-12">
-            <label for="inputState" className="form-label">Empleado</label>
-            <select id="inputState" className="form-select">
-              <option selected>Choose...</option>
-              <option>...</option>
-            </select>
-          </div>
-          <div className="col-md-6">
-            <label for="inputState" className="form-label">Area</label>
-            <select id="inputState" className="form-select">
-              <option selected>Choose...</option>
-              <option>...</option>
-            </select>
-          </div>
-          <div className="col-md-6">
-            <label for="inputState" className="form-label">Rol</label>
-            <select id="inputState" className="form-select">
-              <option selected>Choose...</option>
-              <option>...</option>
-            </select>
-          </div>
-
-          <div className="col-12 d-flex justify-content-end">
-            <button type="text" className="btn btn-success ms-1">Registrar</button>
-            <button type="submit" className="btn btn-secondary ms-1">Cancelar</button>
-          </div>
-        </form>
+        <FormUser 
+          title='Nuevo Usuario'
+          textButton1='Registrar'
+          typeButton1='success'
+          handleButton1='addUser'
+          textButton2='Cancelar'
+          typeButton2='secondary'
+          handleButton2={closeModalAddUser}
+        />
       </Modal>
+
+      {/* update user Modal */}
+      <Modal
+        isOpen={modalUpdateUser}
+        closeModal={closeModalUpdateUser}
+      >
+        <FormUser 
+          title='Modificación de Usuario'
+          textButton1='Modificar'
+          typeButton1='danger'
+          handleButton1='updateUser'
+          textButton2='Cancelar'
+          typeButton2='secondary'
+          handleButton2={closeModalUpdateUser}
+        />
+      </Modal>
+      {/* ----------- */}
 
       <header>
         <h2 className='container-list__h2'>Mantenimiento de usuario</h2>
       </header>
 
       <div className='container-list'>
+  
+        <HeaderWithButton 
+          textNav='Listado de Usuario'
+          textButton='Nuevo Registro'
+          typeButton='success'
+          openModal={openModalAddUser}
+        />
 
-        <div className='container-list__header'>
-          <h3 className='container-list__h3'>Listado de Usuario</h3>
-          <button type="button" className="btn btn-success me-1" onClick={openModalAddUser}>
-            <Link>
-              <i className="bi bi-plus text--white"></i>
-            </Link>
-            Nuevo Registro
-          </button>
-        </div>
-
-        {/* //before SearchNav and next div tenian un container div */}
-        <SearchNav
+        <NavWithSearch
           nameSearch={userName}
           handleSearch={handleSearchUserName}
         />
@@ -170,7 +163,10 @@ function Usuario() {
                         </span>
                       </td>
                       <td>
-                        <button type="button" className="btn btn-info me-1">
+                        <button 
+                          type="button" 
+                          className="btn btn-info me-1"
+                          onClick={openModalUpdateUser}>
                           <Link>
                             <i className="bi bi-pencil-fill text--white"></i>
                           </Link>

@@ -5,7 +5,6 @@ import { Outlet } from 'react-router-dom'
 
 
 import "../templates/AdminLTE-3.2.0/plugins/jquery/jquery.min.js"
-// import "../templates/AdminLTE-3.2.0/plugins/bootstrap/js/bootstrap.bundle.min.js"
 import "../templates/AdminLTE-3.2.0/dist/js/adminlte.min.js" //this controlo to preloader
 
 function Home() {

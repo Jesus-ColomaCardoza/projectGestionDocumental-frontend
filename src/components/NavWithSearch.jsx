@@ -1,5 +1,5 @@
 
-const SearchNav = ({nameSearch,handleSearch}) => {
+const NavWithSearch = ({nameSearch,handleSearch}) => {
     return (
         <nav className="navbar navbar-expand-lg">
             <div className="container-fluid">
@@ -29,4 +29,4 @@ const SearchNav = ({nameSearch,handleSearch}) => {
     )
 }
 
-export default SearchNav
+export default NavWithSearch;

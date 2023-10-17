@@ -1,0 +1,11 @@
+.container-list__header{
+    border-bottom: .5em solid var(--blackfont) ;
+    padding: 1em;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+.container-list__h3{
+    margin: 0;
+}
