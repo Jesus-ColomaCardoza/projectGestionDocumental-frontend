@@ -8,6 +8,14 @@ import HeaderWithButton from '../components/HeaderWithButton';
 import FormUser from '../components/FormUser';
 
 function Usuario() {
+  const userDatesSelected = {
+    id: '',
+    user_name: '',
+    user_password: '',
+    empleado: '',
+    area: '',
+    role: ''
+  };
 
   const [users, setUsers] = useState([]);
   const [userName, setUserName] = useState('');
@@ -64,14 +72,10 @@ function Usuario() {
           icon: 'success',
           confirmButtonColor: '#28A745',
           confirmButtonText: 'Ok'
-        }
-        )
+        })
       }
     })
   }
-
-
-  
 
   return (
 
@@ -83,7 +87,7 @@ function Usuario() {
         isOpen={modalAddUser}
         closeModal={closeModalAddUser}
       >
-        <FormUser 
+        <FormUser
           title='Nuevo Usuario'
           textButton1='Registrar'
           typeButton1='success'
@@ -91,6 +95,7 @@ function Usuario() {
           textButton2='Cancelar'
           typeButton2='secondary'
           handleButton2={closeModalAddUser}
+          handleTable={loadUsers}
         />
       </Modal>
 
@@ -99,7 +104,7 @@ function Usuario() {
         isOpen={modalUpdateUser}
         closeModal={closeModalUpdateUser}
       >
-        <FormUser 
+        <FormUser
           title='Modificación de Usuario'
           textButton1='Modificar'
           typeButton1='danger'
@@ -107,6 +112,7 @@ function Usuario() {
           textButton2='Cancelar'
           typeButton2='secondary'
           handleButton2={closeModalUpdateUser}
+          handleTable={loadUsers}
         />
       </Modal>
       {/* ----------- */}
@@ -116,8 +122,8 @@ function Usuario() {
       </header>
 
       <div className='container-list'>
-  
-        <HeaderWithButton 
+
+        <HeaderWithButton
           textNav='Listado de Usuario'
           textButton='Nuevo Registro'
           typeButton='success'
@@ -158,19 +164,19 @@ function Usuario() {
                       }
                       </td>
                       <td>
-                        <span className='highlighter highlighter--red'>
+                        <span className={`highlighter highlighter--${user.state == 'activo' ? 'green' : 'red'}`}>
                           {user.state}
                         </span>
                       </td>
                       <td>
-                        <button 
-                          type="button" 
-                          className="btn btn-info me-1"
-                          onClick={openModalUpdateUser}>
-                          <Link>
+                        <Link to={`/home/usuario/` + user.id} >
+                          <button
+                            type="button"
+                            className="btn btn-info me-1"
+                            onClick={() => { openModalUpdateUser() }}>
                             <i className="bi bi-pencil-fill text--white"></i>
-                          </Link>
-                        </button>
+                          </button>
+                        </Link>
                         <button
                           type="button"
                           className="btn btn-warning me-1"
