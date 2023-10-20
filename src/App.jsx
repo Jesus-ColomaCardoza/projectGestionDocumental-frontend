@@ -19,7 +19,7 @@ function App() {
           <Route exact path='/home' element={<Home />}>
             <Route exact path='/home/tramite' element={<Tramite />}></Route>
             <Route exact path='/home/usuario' element={<Usuario />}>
-              <Route exact path='/home/usuario/:id'></Route>
+              {/* <Route exact path='/home/usuario/:id' element={<FormUser/>}></Route> */}
             </Route>
             <Route exact path='/home/empleado' element={<Empleado />}></Route>
             <Route exact path='/home/area' element={<Area />}></Route>
