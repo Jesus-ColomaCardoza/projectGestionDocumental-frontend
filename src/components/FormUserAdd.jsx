@@ -63,8 +63,8 @@ const FormUserAdd = ({
         </div>
         <div className="col-md-12">
           <label className="form-label">Empleado</label>
-          <select className="form-select" name='empleado_id' onChange={handleChange} >
-            <option key={-1}>Seleccionar empleado</option>
+          <select className="form-select" name='empleado_id' onChange={handleChange} value={-1}>
+            <option disabled key={-1} value={-1}>Seleccionar empleado</option>
             {
               stateEmployees.map((employee) => {
                 return <option key={employee.id} value={employee.id} >{employee.employee_name + ' ' + employee.maternal_surname + ' ' + employee.maternal_surname}</option>
@@ -73,8 +73,8 @@ const FormUserAdd = ({
         </div>
         <div className="col-md-6">
           <label className="form-label">Area</label>
-          <select className="form-select" name='area_id' onChange={handleChange}>
-            <option key={-1}>Seleccionar área</option>
+          <select className="form-select" name='area_id' onChange={handleChange} value={-1}>
+            <option disabled key={-1} value={-1}>Seleccionar área</option>
             {
               stateAreas.map((area) => {
                 return <option key={area.id} value={area.id} >{area.area_name}</option>
@@ -84,8 +84,8 @@ const FormUserAdd = ({
         </div>
         <div className="col-md-6">
           <label className="form-label">Rol</label>
-          <select className="form-select" name='role' onChange={handleChange}>
-            <option key={-1}>Seleccionar rol</option>
+          <select className="form-select" name='role' onChange={handleChange} value={-1}>
+            <option disabled key={-1} value={-1}>Seleccionar rol</option>
             <option key={0} value={'admin'}>admin</option>
             <option key={1} value={'user'}>user</option>
             {/* <option  key={-1}>Seleccionar rol</option>

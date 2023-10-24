@@ -8,12 +8,13 @@ import FormUserAdd from '../components/FormUserAdd';
 import FormUserUpdate from '../components/FormUserUpdate';
 import { alertMessage } from '../components/AlertMessage';
 import FormAreaAdd from '../components/FormAreaAdd';
+import FormAreaUpdate from '../components/FormAreaUpdate';
 
 const Area = () => {
   const [areas, setAreas] = useState([]);
   const [areaName, setAreaName] = useState('');
 
-  const [areaId, setAreaId] = useState(null);
+  const [ areaId, setAreaId] = useState(null);
 
   const [modalAddArea, openModalAddArea, closeModalAddArea] = useModal(false);
   const [modalUpdateArea, openModalUpdateArea, closeModalUpdateArea] = useModal(false);
@@ -119,7 +120,7 @@ const Area = () => {
         closeModal={closeModalAddArea}
       >
        <FormAreaAdd 
-        textButton1='Modificar'
+        textButton1='Registrar'
         textButton2='Cancelar'
         typeButton1='success'
         typeButton2='secondary'
@@ -134,7 +135,15 @@ const Area = () => {
         isOpen={modalUpdateArea}
         closeModal={closeModalUpdateArea}
       >
-        
+       <FormAreaUpdate
+        id={areaId}
+        textButton1='Modificar'
+        textButton2='Cancelar'
+        typeButton1='danger'
+        typeButton2='secondary'
+        handleButton2={closeModalUpdateArea}
+        handleTable={loadAreas}
+       /> 
       </Modal>
       {/* ----------- */}
 
