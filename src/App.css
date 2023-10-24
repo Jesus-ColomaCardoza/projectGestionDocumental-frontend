@@ -1,6 +1,8 @@
 :root{
     --greenBootstrap:#28A745;
     --redBootstrap:#DC3545;
+    --blackfont:#F4F6F9;
+
 }
 .custom-scroll{
     height: 50vh;
@@ -28,4 +30,26 @@
 .highlighter--red{
     color: #fff;
     background-color: var(--redBootstrap);
+}
+
+/* color custom text */
+.text--white{
+    color: #fff;
+}
+
+/* container */
+.container{
+    min-height: 90vh;
+}
+.container-list{
+    margin: 0 2em;
+    background-color: #fff;
+}
+.container-list__h2{
+    padding: .3em 1em;
+}
+
+/* tables */
+.table-primary{
+    background-color: #aaa;
 }

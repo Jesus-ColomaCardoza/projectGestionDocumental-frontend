@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { alertMessage } from './AlertMessage';
 
 const FormUserAdd = ({
-  title,
   textButton1,
   textButton2,
   typeButton1,
@@ -38,9 +37,9 @@ const FormUserAdd = ({
       //we reset the add user form
       e.target.reset();
       //we show the confirmed modal  
-      alertMessage('Registro exitoso!','El usuario has sido registrado','success','OK','#28A745');
+      alertMessage('Registro exitoso!', 'El usuario has sido registrado', 'success', 'OK', '#28A745');
     } catch (error) {
-      alertMessage('Error!',error,'error','OK','#d33');
+      alertMessage('Error!', error, 'error', 'OK', '#d33');
       console.log(error);
     }
     //we close the modal window
@@ -53,7 +52,6 @@ const FormUserAdd = ({
 
   return (
     <>
-      <h3 className='mb-4 text-center'>{title}</h3>
       <form className="row g-3" onSubmit={addUser}>
         <div className="col-md-6">
           <label htmlFor="inputEmail4" className="form-label">Usuario</label>

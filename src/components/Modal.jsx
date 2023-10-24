@@ -1,6 +1,6 @@
 import '../stylesheets/Modal.css'
 
-const Modal = ({ children, isOpen, closeModal }) => {
+const Modal = ({ children,title, isOpen, closeModal }) => {
     const handleModalContainerClick = (e) => e.stopPropagation();
     return (
         <article className={`modal-custom ${isOpen ? 'is-open' : ''}`} onClick={closeModal}>
@@ -11,6 +11,7 @@ const Modal = ({ children, isOpen, closeModal }) => {
                 >
                     X
                 </button>
+                <h3 className='mb-4 text-center'>{title}</h3>
                 {children}
             </div>
 

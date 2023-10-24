@@ -3,7 +3,6 @@ import { alertMessage } from './AlertMessage';
 
 const FormUserUpdate = ({
   id,
-  title,
   textButton1,
   textButton2,
   typeButton1,
@@ -63,7 +62,6 @@ const FormUserUpdate = ({
 
   return (
     <>
-      <h3 className='mb-4 text-center'>{title}</h3>
       <form className="row g-3" onSubmit={updateUser}>
         <div className="col-md-6">
           <label htmlFor="inputEmail4" className="form-label">Usuario</label>
