@@ -8,6 +8,7 @@ const FormAreaAdd = ({
   typeButton2,
   handleButton2,
   handleTable,
+  allAreas
 }) => {
 
   const initialAreaDates = {
@@ -19,29 +20,37 @@ const FormAreaAdd = ({
     setArea({ ...area, [e.target.name]: e.target.value });
   };
 
+  const searchAreaByName = (name) => {
+    const areaNames = allAreas.map(name => name.area_name);
+    return areaNames.includes(name);
+  }
+
   const addArea = async (e) => {
-    //falta implementar : cuando un usuario no se registro correctamente no se valida, se debe mostrar error 
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:3000/area/create/', {
-        method: 'POST',
-        body: JSON.stringify(area),
-        headers: { 'Content-Type': "application/json" }
-      })
-      //we reset the add user form
-      e.target.reset();
-      //we show the confirmed modal  
-      alertMessage('Registro exitoso!', 'El área ha sido registrada', 'success', 'OK', '#28A745');
+      if (!searchAreaByName(area.area_name) && !area.area_name == '') {
+        const response = await fetch('http://localhost:3000/area/create/', {
+          method: 'POST',
+          body: JSON.stringify(area),
+          headers: { 'Content-Type': "application/json" }
+        })
+        //we show the confirmed modal  
+        alertMessage('Registro exitoso!', 'El área ha sido registrada', 'success', 'OK', '#28A745');
+      } else {
+        throw new Error('El área ingresada ya existe')
+      }
     } catch (error) {
       alertMessage('Error!', error, 'error', 'OK', '#d33');
       console.log(error);
     }
+    //we reset the add user form
+    e.target.reset();
     //we close the modal window
     handleButton2();
     //cambiar el estado de la tabla user
     handleTable();
     //reset el object userDates
-    setArea(initialAreaDates)
+    setArea(initialAreaDates);
   }
 
   return (
@@ -49,7 +58,7 @@ const FormAreaAdd = ({
       <form className="row g-3" onSubmit={addArea}>
         <div className="col-md-12">
           <label htmlFor="inputAreaName" className="form-label">Área</label>
-          <input type="text" className="form-control" name='area_name' onChange={handleChange} />
+          <input required type="text" className="form-control" name='area_name' onChange={handleChange} />
         </div>
         <div className="col-12 d-flex justify-content-end">
           <button type="submit" className={`btn btn-${typeButton1} ms-1`}>{textButton1}</button>

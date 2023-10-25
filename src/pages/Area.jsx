@@ -13,9 +13,7 @@ import FormAreaUpdate from '../components/FormAreaUpdate';
 const Area = () => {
   const [areas, setAreas] = useState([]);
   const [areaName, setAreaName] = useState('');
-
   const [ areaId, setAreaId] = useState(null);
-
   const [modalAddArea, openModalAddArea, closeModalAddArea] = useModal(false);
   const [modalUpdateArea, openModalUpdateArea, closeModalUpdateArea] = useModal(false);
 
@@ -52,31 +50,6 @@ const Area = () => {
         alertMessage('¡Eliminación exitosa!', 'El área has sido eliminada', 'success', 'OK', '#28A745');
       }
     })
-  }
-  const handleChangeState = async (id, value) => {
-    await fetch(`http://localhost:3000/usuario/update/${id}`, {
-      method: 'PUT',
-      body: JSON.stringify({ state: value }),
-      headers: { 'Content-type': 'application/json' }
-    });
-  }
-  const handleChangeStateDom = (e) => {
-
-    let button = e.target.classList.contains('bi') ? e.target.parentElement : e.target;
-    let td = button.parentElement;
-
-    if (button.classList.contains('btn-success')) {
-      td.parentElement.children[5].firstChild.classList.replace('highlighter--red', 'highlighter--green');
-      td.parentElement.children[5].firstChild.textContent = 'activo';
-      td.children[2].disabled = true;
-      td.children[3].disabled = false;
-
-    } else if (button.classList.contains('btn-danger')) {
-      td.parentElement.children[5].firstChild.classList.replace('highlighter--green', 'highlighter--red');
-      td.parentElement.children[5].firstChild.textContent = 'bloqueado';
-      td.children[2].disabled = false;
-      td.children[3].disabled = true;
-    }
   }
   const handleSearchAreaName = (e) => {
     const name = e.target.value;
@@ -126,6 +99,7 @@ const Area = () => {
         typeButton2='secondary'
         handleButton2={closeModalAddArea}
         handleTable={loadAreas}
+        allAreas={areas}
        />
       </Modal>
 
@@ -189,7 +163,7 @@ const Area = () => {
                           {area.state}
                         </span>
                       </td>
-                      <td onClick={handleChangeStateDom}>
+                      <td>
                         <button
                           type="button"
                           className="btn btn-info me-1"

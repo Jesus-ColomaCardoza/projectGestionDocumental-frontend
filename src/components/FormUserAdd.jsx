@@ -55,15 +55,15 @@ const FormUserAdd = ({
       <form className="row g-3" onSubmit={addUser}>
         <div className="col-md-6">
           <label htmlFor="inputEmail4" className="form-label">Usuario</label>
-          <input type="text" className="form-control" name='user_name' onChange={handleChange} />
+          <input required type="text" className="form-control" name='user_name' onChange={handleChange} />
         </div>
         <div className="col-md-6">
           <label htmlFor="inputPassword4" className="form-label">Contraseña</label>
-          <input type="password" className="form-control" name='user_password' onChange={handleChange} />
+          <input required type="password" className="form-control" name='user_password' onChange={handleChange} />
         </div>
         <div className="col-md-12">
           <label className="form-label">Empleado</label>
-          <select className="form-select" name='empleado_id' onChange={handleChange} value={-1}>
+          <select className="form-select" name='empleado_id' onChange={handleChange} defaultValue={-1}>
             <option disabled key={-1} value={-1}>Seleccionar empleado</option>
             {
               stateEmployees.map((employee) => {
@@ -73,7 +73,7 @@ const FormUserAdd = ({
         </div>
         <div className="col-md-6">
           <label className="form-label">Area</label>
-          <select className="form-select" name='area_id' onChange={handleChange} value={-1}>
+          <select className="form-select" name='area_id' onChange={handleChange} defaultValue={-1}>
             <option disabled key={-1} value={-1}>Seleccionar área</option>
             {
               stateAreas.map((area) => {
@@ -84,7 +84,7 @@ const FormUserAdd = ({
         </div>
         <div className="col-md-6">
           <label className="form-label">Rol</label>
-          <select className="form-select" name='role' onChange={handleChange} value={-1}>
+          <select className="form-select" name='role' onChange={handleChange} defaultValue={-1}>
             <option disabled key={-1} value={-1}>Seleccionar rol</option>
             <option key={0} value={'admin'}>admin</option>
             <option key={1} value={'user'}>user</option>

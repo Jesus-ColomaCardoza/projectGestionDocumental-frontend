@@ -65,11 +65,11 @@ const FormUserUpdate = ({
       <form className="row g-3" onSubmit={updateUser}>
         <div className="col-md-6">
           <label htmlFor="inputEmail4" className="form-label">Usuario</label>
-          <input type="text" className="form-control" name='user_name' value={user.user_name} onChange={handleChange} />
+          <input required type="text" className="form-control" name='user_name' value={user.user_name} onChange={handleChange} />
         </div>
         <div className="col-md-6">
           <label htmlFor="inputPassword4" className="form-label">Contraseña</label>
-          <input type="password" className="form-control" name='user_password' value={user.user_password} onChange={handleChange} />
+          <input required type="password" className="form-control" name='user_password' value={user.user_password} onChange={handleChange} />
         </div>
         <div className="col-md-12">
           <label className="form-label">Empleado</label>
