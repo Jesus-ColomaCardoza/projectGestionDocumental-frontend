@@ -85,7 +85,7 @@ const Usuario = () => {
 
     } else if (button.classList.contains('btn-danger')) {
       td.parentElement.children[5].firstChild.classList.replace('highlighter--green', 'highlighter--red');
-      td.parentElement.children[5].firstChild.textContent = 'bloqueado';
+      td.parentElement.children[5].firstChild.textContent = 'inactivo';
       td.children[2].disabled = false;
       td.children[3].disabled = true;
     }
@@ -220,8 +220,8 @@ const Usuario = () => {
                         <button
                           type="button"
                           className="btn btn-danger me-1"
-                          disabled={user.state == 'bloqueado' ? true : false}
-                          onClick={() => { handleChangeState(user.id, 'bloqueado') }}>
+                          disabled={user.state == 'inactivo' ? true : false}
+                          onClick={() => { handleChangeState(user.id, 'inactivo') }}>
                           <i className="bi bi-x-circle-fill text--white"></i>
                         </button>
                       </td>

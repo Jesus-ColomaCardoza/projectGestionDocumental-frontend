@@ -4,8 +4,6 @@ import { useModal } from '../hookscustom/useModal';
 import Modal from '../components/Modal';
 import NavWithSearch from '../components/NavWithSearch';
 import HeaderWithButton from '../components/HeaderWithButton';
-import FormUserAdd from '../components/FormUserAdd';
-import FormUserUpdate from '../components/FormUserUpdate';
 import { alertMessage } from '../components/AlertMessage';
 import FormAreaAdd from '../components/FormAreaAdd';
 import FormAreaUpdate from '../components/FormAreaUpdate';

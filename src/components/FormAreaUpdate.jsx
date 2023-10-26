@@ -71,7 +71,7 @@ const FormAreaUpdate = ({
           <select className="form-select" name='state' onChange={handleChange} value={area.state}>
             <option disabled key={-1}>Seleccionar estado</option>
             <option key={0} value={'activo'}>activo</option>
-            <option key={1} value={'bloqueado'}>bloqueado</option>
+            <option key={1} value={'inactivo'}>inactivo</option>
           </select>
         </div>
         <div className="col-12 d-flex justify-content-end">
