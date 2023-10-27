@@ -4,19 +4,17 @@ import { useModal } from '../hookscustom/useModal';
 import Modal from '../components/Modal';
 import NavWithSearch from '../components/NavWithSearch';
 import HeaderWithButton from '../components/HeaderWithButton';
-import FormUserAdd from '../components/FormUserAdd';
-import FormUserUpdate from '../components/FormUserUpdate';
+import FormTipoDocAdd from '../components/FormTipoDocAdd';
+import FormTipoDocUpdate from '../components/FormTipoDocUpdate';
 import { alertMessage } from '../components/AlertMessage';
-import FormAreaAdd from '../components/FormAreaAdd';
-import FormAreaUpdate from '../components/FormAreaUpdate';
 
 const TipoDocumento = () => {
-  const [areas, setAreas] = useState([]);
   const [tiposDocumento, setTiposDocumento] = useState([]);
-  const [areaName, setAreaName] = useState('');
-  const [areaId, setAreaId] = useState(null);
-  const [modalAddArea, openModalAddArea, closeModalAddArea] = useModal(false);
-  const [modalUpdateArea, openModalUpdateArea, closeModalUpdateArea] = useModal(false);
+  const [tiposDocumentoName, setTiposDocumentoName] = useState('');
+
+  const [tipoDocId, setTipoDocId] = useState(null);
+  const [modalAddTipoDoc, openModalAddTipoDoc, closeModalAddTipoDoc] = useModal(false);
+  const [modalUpdateTipoDoc, openModalUpdateTipoDoc, closeModalUpdateTipoDoc] = useModal(false);
 
   const loadTiposDocumento = async () => {
     const response = await fetch('http://localhost:3000/tipodocumento/getlist/');
@@ -24,18 +22,18 @@ const TipoDocumento = () => {
     setTiposDocumento(data);
     // console.log(data);
   }
-  const loadAreasByName = async () => {
-    if (areaName !== '') {
-      const response = await fetch("http://localhost:3000/area/getbyname/" + areaName);
+  const loadTiposDocumentoByName = async () => {
+    if (tiposDocumentoName !== '') {
+      const response = await fetch("http://localhost:3000/tipodocumento/getbyname/" + tiposDocumentoName);
       const data = await response.json();
-      setAreas(data);
+      setTiposDocumento(data);
       //console.log(data);
     }
   }
-  const deleteArea = async (id) => {
+  const deleteTipoDocumento = async (id) => {
     // console.log(id);
     Swal.fire({
-      title: '¿Está seguro de eliminar esta área?',
+      title: '¿Está seguro de eliminar este tipo de documento?',
       text: "¡No podrá revertir!",
       icon: 'warning',
       showCancelButton: true,
@@ -44,24 +42,25 @@ const TipoDocumento = () => {
       confirmButtonText: 'Aceptar'
     }).then(async (result) => {
       if (result.isConfirmed) {
-        await fetch("http://localhost:3000/area/delete/" + id, {
+        await fetch("http://localhost:3000/tipodocumento/delete/" + id, {
           method: "DELETE",
         });
-        setAreas(areas.filter(area => area.id !== id));
-        alertMessage('¡Eliminación exitosa!', 'El área has sido eliminada', 'success', 'OK', '#28A745');
+        setTiposDocumento(tiposDocumento.filter(tipoDocumento => tipoDocumento.id !== id));
+        alertMessage('¡Eliminación exitosa!', 'Este tipo de documento ha sido eliminado', 'success', 'OK', '#28A745');
       }
     })
   }
-  const handleSearchAreaName = (e) => {
+  const handleSearchTiposDocumentoName = (e) => {
     const name = e.target.value;
-    setAreaName(name)
+    setTiposDocumentoName(name)
+    console.log(name);
     if (name == '') {
       loadTiposDocumento()
     }
   }
 
   useEffect(() => { loadTiposDocumento() }, []);
-  useEffect(() => { loadAreasByName() }, [areaName]);
+  useEffect(() => { loadTiposDocumentoByName() }, [tiposDocumentoName]);
 
   const getDateTime = (datetimestamp) => {
     let timestamp = new Date(datetimestamp);
@@ -89,34 +88,34 @@ const TipoDocumento = () => {
       {/* Modals  */}
       {/* add user Modal , the handle table get can improve with query to the backend*/}
       <Modal
-        title='Nueva Área'
-        isOpen={modalAddArea}
-        closeModal={closeModalAddArea}
+        title='Nuevo tipo de documento'
+        isOpen={modalAddTipoDoc}
+        closeModal={closeModalAddTipoDoc}
       >
-       <FormAreaAdd 
+       <FormTipoDocAdd 
         textButton1='Registrar'
         textButton2='Cancelar'
         typeButton1='success'
         typeButton2='secondary'
-        handleButton2={closeModalAddArea}
+        handleButton2={closeModalAddTipoDoc}
         handleTable={loadTiposDocumento}
-        allAreas={areas}
+        allTiposDoc={tiposDocumento}
        />
       </Modal>
 
       {/* update user Modal */}
       <Modal
         title='Modificación de Área'
-        isOpen={modalUpdateArea}
-        closeModal={closeModalUpdateArea}
+        isOpen={modalUpdateTipoDoc}
+        closeModal={closeModalUpdateTipoDoc}
       >
-       <FormAreaUpdate
-        id={areaId}
+       <FormTipoDocUpdate
+        id={tipoDocId}
         textButton1='Modificar'
         textButton2='Cancelar'
         typeButton1='danger'
         typeButton2='secondary'
-        handleButton2={closeModalUpdateArea}
+        handleButton2={closeModalUpdateTipoDoc}
         handleTable={loadTiposDocumento}
        /> 
       </Modal>
@@ -132,12 +131,12 @@ const TipoDocumento = () => {
           textNav='Listado de áreas'
           textButton='Nuevo Registro'
           typeButton='success'
-          openModal={openModalAddArea}
+          openModal={openModalAddTipoDoc}
         />
 
         <NavWithSearch
-          nameSearch={areaName}
-          handleSearch={handleSearchAreaName}
+          nameSearch={tiposDocumentoName}
+          handleSearch={handleSearchTiposDocumentoName}
         />
 
         <div className='custom-scroll'>
@@ -168,13 +167,13 @@ const TipoDocumento = () => {
                         <button
                           type="button"
                           className="btn btn-info me-1"
-                          onClick={() => { openModalUpdateArea(), setAreaId(tdoc.id) }}>
+                          onClick={() => { openModalUpdateTipoDoc(), setTipoDocId(tdoc.id) }}>
                           <i className="bi bi-pencil-fill text--white"></i>
                         </button>
                         <button
                           type="button"
                           className="btn btn-warning me-1"
-                          onClick={() => { deleteArea(tdoc.id) }}>
+                          onClick={() => { deleteTipoDocumento(tdoc.id) }}>
                           <i className="bi bi-trash-fill text--white"></i>
                         </button>
                       </td>

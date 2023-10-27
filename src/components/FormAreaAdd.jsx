@@ -27,6 +27,7 @@ const FormAreaAdd = ({
 
   const addArea = async (e) => {
     e.preventDefault();
+    // console.log(area);
     try {
       if (!searchAreaByName(area.area_name) && !area.area_name == '') {
         const response = await fetch('http://localhost:3000/area/create/', {
