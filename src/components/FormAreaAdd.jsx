@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { alertMessage } from './AlertMessage';
+import { alertMessage } from '../libraries/alertMessage';
 
 const FormAreaAdd = ({
   textButton1,
@@ -21,7 +21,7 @@ const FormAreaAdd = ({
   };
 
   const searchAreaByName = (name) => {
-    const areaNames = allAreas.map(name => name.area_name);
+    const areaNames = allAreas.map(name => name.area_name.toLowerCase());
     return areaNames.includes(name);
   }
 
@@ -29,7 +29,7 @@ const FormAreaAdd = ({
     e.preventDefault();
     // console.log(area);
     try {
-      if (!searchAreaByName(area.area_name) && !area.area_name == '') {
+      if (!searchAreaByName(area.area_name.toLowerCase()) && !area.area_name == '') {
         const response = await fetch('http://localhost:3000/area/create/', {
           method: 'POST',
           body: JSON.stringify(area),

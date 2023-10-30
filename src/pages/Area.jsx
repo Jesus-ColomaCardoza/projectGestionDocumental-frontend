@@ -4,7 +4,8 @@ import { useModal } from '../hookscustom/useModal';
 import Modal from '../components/Modal';
 import NavWithSearch from '../components/NavWithSearch';
 import HeaderWithButton from '../components/HeaderWithButton';
-import { alertMessage } from '../components/AlertMessage';
+import { alertMessage } from '../libraries/alertMessage';
+import { getDateTime } from '../libraries/application';
 import FormAreaAdd from '../components/FormAreaAdd';
 import FormAreaUpdate from '../components/FormAreaUpdate';
 
@@ -60,25 +61,6 @@ const Area = () => {
   useEffect(() => { loadAreas() }, []);
   useEffect(() => { loadAreasByName() }, [areaName]);
 
-  const getDateTime = (datetimestamp) => {
-    let timestamp = new Date(datetimestamp);
-    // Extraer la fecha
-    const año = timestamp.getFullYear();
-    const mes = timestamp.getMonth() + 1; 
-    const día = timestamp.getDate();
-
-    // Extraer la hora
-    const horas = timestamp.getHours();
-    const minutos = timestamp.getMinutes();
-    const segundos = timestamp.getSeconds();
-
-    // Formatear la fecha y la hora
-    const fecha = `${día.toString().padStart(2, '0')}-${mes.toString().padStart(2, '0')}-${año}`;
-    const hora = `${horas.toString().padStart(2, '0')}:${minutos.toString().padStart(2, '0')}:${segundos.toString().padStart(2, '0')}`;
-
-    console.log(fecha+' '+hora);
-    return fecha+' '+hora 
-  }
   return (
 
     <div className='container'>

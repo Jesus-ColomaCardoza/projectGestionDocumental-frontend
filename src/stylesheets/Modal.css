@@ -29,6 +29,11 @@
     overflow-y: auto;
     border-radius: .3em;
 }
+.modal-custom__container--medium{
+    min-width: 50%;
+    max-width: 60%;
+    max-height: 95vh;
+}
 
 .modal-custom__close{
     position: absolute;

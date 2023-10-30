@@ -6,7 +6,7 @@ import NavWithSearch from '../components/NavWithSearch';
 import HeaderWithButton from '../components/HeaderWithButton';
 import FormUserAdd from '../components/FormUserAdd';
 import FormUserUpdate from '../components/FormUserUpdate';
-import { alertMessage } from '../components/AlertMessage';
+import { alertMessage } from '../libraries/alertMessage';
 
 const Usuario = () => {
 

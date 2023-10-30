@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from 'react';
-import { alertMessage } from './AlertMessage';
+import { alertMessage } from '../libraries/alertMessage';
 
 const FormTipoDocUpdate = ({
   id,

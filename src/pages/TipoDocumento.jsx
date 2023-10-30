@@ -6,12 +6,12 @@ import NavWithSearch from '../components/NavWithSearch';
 import HeaderWithButton from '../components/HeaderWithButton';
 import FormTipoDocAdd from '../components/FormTipoDocAdd';
 import FormTipoDocUpdate from '../components/FormTipoDocUpdate';
-import { alertMessage } from '../components/AlertMessage';
+import { alertMessage } from '../libraries/alertMessage';
+import { getDateTime } from '../libraries/application';
 
 const TipoDocumento = () => {
   const [tiposDocumento, setTiposDocumento] = useState([]);
   const [tiposDocumentoName, setTiposDocumentoName] = useState('');
-
   const [tipoDocId, setTipoDocId] = useState(null);
   const [modalAddTipoDoc, openModalAddTipoDoc, closeModalAddTipoDoc] = useModal(false);
   const [modalUpdateTipoDoc, openModalUpdateTipoDoc, closeModalUpdateTipoDoc] = useModal(false);
@@ -62,25 +62,6 @@ const TipoDocumento = () => {
   useEffect(() => { loadTiposDocumento() }, []);
   useEffect(() => { loadTiposDocumentoByName() }, [tiposDocumentoName]);
 
-  const getDateTime = (datetimestamp) => {
-    let timestamp = new Date(datetimestamp);
-    // Extraer la fecha
-    const año = timestamp.getFullYear();
-    const mes = timestamp.getMonth() + 1; 
-    const día = timestamp.getDate();
-
-    // Extraer la hora
-    const horas = timestamp.getHours();
-    const minutos = timestamp.getMinutes();
-    const segundos = timestamp.getSeconds();
-
-    // Formatear la fecha y la hora
-    const fecha = `${día.toString().padStart(2, '0')}-${mes.toString().padStart(2, '0')}-${año}`;
-    const hora = `${horas.toString().padStart(2, '0')}:${minutos.toString().padStart(2, '0')}:${segundos.toString().padStart(2, '0')}`;
-
-    console.log(fecha+' '+hora);
-    return fecha+' '+hora 
-  }
   return (
 
     <div className='container'>
@@ -105,7 +86,7 @@ const TipoDocumento = () => {
 
       {/* update user Modal */}
       <Modal
-        title='Modificación de Área'
+        title='Modificación de Tipo de documento'
         isOpen={modalUpdateTipoDoc}
         closeModal={closeModalUpdateTipoDoc}
       >
@@ -122,13 +103,13 @@ const TipoDocumento = () => {
       {/* ----------- */}
 
       <header>
-        <h2 className='container-list__h2'>Mantenimiento de áreas</h2>
+        <h2 className='container-list__h2'>Mantenimiento de Tipo de Documentos</h2>
       </header>
 
       <div className='container-list'>
 
         <HeaderWithButton
-          textNav='Listado de áreas'
+          textNav='Listado de tipos de documentos'
           textButton='Nuevo Registro'
           typeButton='success'
           openModal={openModalAddTipoDoc}
@@ -144,7 +125,7 @@ const TipoDocumento = () => {
             <thead className='custom-sticky table-light'>
               <tr>
                 <th scope="col">#</th>
-                <th scope="col">Área</th>
+                <th scope="col">Tipo de Documento</th>
                 <th scope="col">Fecha de Registro</th>
                 <th scope="col">Estatus</th>
                 <th scope="col">Optiones</th>

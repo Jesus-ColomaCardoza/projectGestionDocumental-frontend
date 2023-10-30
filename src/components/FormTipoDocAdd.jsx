@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { alertMessage } from './AlertMessage';
+import { alertMessage } from '../libraries/alertMessage';
 
 const FormTipoDocAdd = ({
   textButton1,

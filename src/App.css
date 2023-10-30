@@ -6,7 +6,10 @@
 }
 .custom-scroll{
     height: 50vh;
-    overflow-y: auto;
+    overflow-y: auto;    
+}
+.dd{
+    width: auto;
 }
 .custom-sticky{
     position:sticky;
