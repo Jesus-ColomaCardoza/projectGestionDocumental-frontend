@@ -8,9 +8,9 @@
     height: 50vh;
     overflow-y: auto;    
 }
-.dd{
+/* .dd{
     width: auto;
-}
+} */
 .custom-sticky{
     position:sticky;
     top: -.1em;

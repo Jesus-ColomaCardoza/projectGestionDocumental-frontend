@@ -11,7 +11,6 @@ const FormEmpleadoAdd = ({
 }) => {
 
   const initialEmployeeDates = {
-    profile_photo:'',
     nro_document:'',
     employee_name:'',
     paternal_surname:'', 
@@ -23,24 +22,44 @@ const FormEmpleadoAdd = ({
     // state:''
   }
   const [employee, setEmployee] = useState(initialEmployeeDates);
+  const [photo, setPhoto] = useState(null);
+  
 
   const handleChange = (e) => {
     setEmployee({ ...employee, [e.target.name]: e.target.value });
+    // formData.append(e.target.name,e.target.value)
+    
   };
+
+  const handleSelectedFile = (e) => { 
+    console.log(e.target.files[0]);
+    setPhoto(e.target.files[0]);   
+
+  }
 
   const addEmployee = async (e) => {
     //falta implementar : cuando un usuario no se registro correctamente no se valida, se debe mostrar error 
-    e.preventDefault();
+    e.preventDefault();   
+
     try {
+      const formData=  new FormData();
+      const arrayEntries=Object.entries(employee);
+  
+      formData.append('profile_photo',photo);
+      arrayEntries.forEach(element => {
+        formData.append(element[0],element[1]);
+      }); 
+
       const response = await fetch('http://localhost:3000/empleado/create/', {
         method: 'POST',
-        body: JSON.stringify(employee),
-        headers: { 'Content-Type': "application/json" }
+        body: formData,
       })
-      //we reset the add user form
+      //we reset the add user form      
       e.target.reset();
+      //we reset the setPhoto
+      setPhoto(null)
       //we show the confirmed modal  
-      alertMessage('Registro exitoso!', 'El usuario has sido registrado', 'success', 'OK', '#28A745');
+      alertMessage('Registro exitoso!', 'El empleado has sido registrado', 'success', 'OK', '#28A745');
     } catch (error) {
       alertMessage('Error!', error, 'error', 'OK', '#d33');
       console.log(error);
@@ -50,7 +69,7 @@ const FormEmpleadoAdd = ({
     //cambiar el estado de la tabla user
     handleTable();
     //reset el object userDates
-    setUser(initialEmployeeDates)
+    setEmployee(initialEmployeeDates)
   }
 
   return (
@@ -98,7 +117,7 @@ const FormEmpleadoAdd = ({
         </div> */}
         <div className="col-md-12">
           <label htmlFor="inputEmail4" className="form-label">Foto</label>
-          <input required type="file" className="form-control" name='profile_photo' onChange={handleChange} />
+          <input required type="file" className="form-control" name='profile_photo' onChange={handleSelectedFile} />
         </div>
         <div className="col-12 d-flex justify-content-end">
           <button type="submit" className={`btn btn-${typeButton1} ms-1`}>{textButton1}</button>

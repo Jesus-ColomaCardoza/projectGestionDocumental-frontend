@@ -8,35 +8,44 @@ import FormEmpleadoAdd from '../components/FormEmpleadoAdd';
 import FormUserUpdate from '../components/FormUserUpdate';
 import { alertMessage } from '../libraries/alertMessage';
 
+let initialStateEmployees;
+
 const Empleado = () => {
 
   const [employees, setEmployees] = useState([]);
   const [employeeName, setEmployeeName] = useState('');
 
-  const [userId, setUserId] = useState(null);
+  const [employeeId, setEmployeeId] = useState(null);
   const [modalAddUser, openModalAddUser, closeModalAddUser] = useModal(false);
   const [modalUpdateUser, openModalUpdateUser, closeModalUpdateUser] = useModal(false);
 
 
   const loadEmployeeByName = async () => {
     if (employeeName !== '') {
-      const response = await fetch("http://localhost:3000/empleado/getbyname/" + employeeName);
-      const data = await response.json();
-      setEmployees(data);
-      //console.log(data);
+      // const response = await fetch("http://localhost:3000/empleado/getbyname/" + employeeName);
+      //  const data = await response.json();
+      // setEmployees(data);
+      // console.log(data);
+
+      // let arrayNameEmployees=employees.map(name=> name.employee_name+' '+name.paternal_surname+' '+name.maternal_surname);
+
+      let arrayFilterByName=employees.filter(name=>(name.employee_name+' '+name.paternal_surname+' '+name.maternal_surname).includes(employeeName))
+      setEmployees(arrayFilterByName)
+      // console.log(arrayFilterByName);
     }
   }
   const loadEmployees = async () => {
     const response = await fetch('http://localhost:3000/empleado/getlist/');
     const data = await response.json();
     setEmployees(data);
-    console.log(data);
+    initialStateEmployees=[...data]
+    // console.log(initialStateEmployees);
   }
 
-  const deleteUser = async (id) => {
+  const deleteEmployee = async (id) => {
     // console.log(id);
     Swal.fire({
-      title: '¿Está seguro de eliminar este usuario?',
+      title: '¿Está seguro de eliminar este empleado?',
       text: "¡No podrá revertir!",
       icon: 'warning',
       showCancelButton: true,
@@ -45,44 +54,21 @@ const Empleado = () => {
       confirmButtonText: 'Aceptar'
     }).then(async (result) => {
       if (result.isConfirmed) {
-        await fetch("http://localhost:3000/usuario/delete/" + id, {
+        await fetch("http://localhost:3000/empleado/delete/" + id, {
           method: "DELETE",
         });
-        setUsers(users.filter(user => user.id !== id));
-        alertMessage('¡Eliminación exitosa!', 'El usuario has sido eliminado', 'success', 'OK', '#28A745');
+        setEmployees(employees.filter(employee => employee.id !== id));
+        alertMessage('¡Eliminación exitosa!', 'El empleado ha sido eliminado', 'success', 'OK', '#28A745');
       }
     })
   }
-  const handleChangeState = async (id, value) => {
-    await fetch(`http://localhost:3000/usuario/update/${id}`, {
-      method: 'PUT',
-      body: JSON.stringify({ state: value }),
-      headers: { 'Content-type': 'application/json' }
-    });
-  }
-  const handleChangeStateDom = (e) => {
 
-    let button = e.target.classList.contains('bi') ? e.target.parentElement : e.target;
-    let td = button.parentElement;
-
-    if (button.classList.contains('btn-success')) {
-      td.parentElement.children[5].firstChild.classList.replace('highlighter--red', 'highlighter--green');
-      td.parentElement.children[5].firstChild.textContent = 'activo';
-      td.children[2].disabled = true;
-      td.children[3].disabled = false;
-
-    } else if (button.classList.contains('btn-danger')) {
-      td.parentElement.children[5].firstChild.classList.replace('highlighter--green', 'highlighter--red');
-      td.parentElement.children[5].firstChild.textContent = 'inactivo';
-      td.children[2].disabled = false;
-      td.children[3].disabled = true;
-    }
-  }
-  const handleSearchUserName = (e) => {
+  const handleSearchEmployeeName = (e) => {
     const name = e.target.value;
-    setUserName(name)
+    setEmployeeName(name)
+    setEmployees(initialStateEmployees)
     if (name == '') {
-      loadUsers()
+      loadEmployees();
     }
   }
 
@@ -146,11 +132,11 @@ const Empleado = () => {
 
         <NavWithSearch
           nameSearch={employeeName}
-          handleSearch={handleSearchUserName}
+          handleSearch={handleSearchEmployeeName}
         />
 
         <div className='custom-scroll'>
-          <table className="table table-hover dd">
+          <table className="table table-hover">
             <thead className='custom-sticky table-light'>
               <tr>
                 <th scope="col">#</th>
@@ -187,17 +173,17 @@ const Empleado = () => {
                           {employee.state}
                         </span>
                       </td>
-                      <td onClick={handleChangeStateDom}>
+                      <td>
                         <button
                           type="button"
                           className="btn btn-info me-1"
-                          onClick={() => { openModalUpdateUser(), setUserId(user.id) }}>
+                          onClick={() => { openModalUpdateUser(), setEmployeeId(employee.id) }}>
                           <i className="bi bi-pencil-fill text--white"></i>
                         </button>
                         <button
                           type="button"
                           className="btn btn-warning me-1"
-                          onClick={() => { deleteUser(user.id) }}>
+                          onClick={() => { deleteEmployee(employee.id) }}>
                           <i className="bi bi-trash-fill text--white"></i>
                         </button>
                       </td>
