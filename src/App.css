@@ -56,3 +56,7 @@
 .table-primary{
     background-color: #aaa;
 }
+
+img{
+    max-width: 100%;
+}

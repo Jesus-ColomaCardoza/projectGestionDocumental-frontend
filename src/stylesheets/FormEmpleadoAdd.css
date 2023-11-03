@@ -1,0 +1,10 @@
+.default-photo__container{
+    border-radius: 100%;
+    width: 15em;
+    height: 15em;
+    margin: auto;
+    overflow: hidden;
+}
+.default-photo{
+    object-fit: cover;
+}

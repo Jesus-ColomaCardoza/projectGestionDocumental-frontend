@@ -37,6 +37,7 @@ const Empleado = () => {
   const loadEmployees = async () => {
     const response = await fetch('http://localhost:3000/empleado/getlist/');
     const data = await response.json();
+    console.log(data);
     setEmployees(data);
     initialStateEmployees=[...data]
     // console.log(initialStateEmployees);
@@ -166,7 +167,7 @@ const Empleado = () => {
                         }
                       </td>
                       <td>{employee.phone}</td>
-                      <td>{employee.email}</td>
+                      <td className='text-break'>{employee.email}</td>
                       <td>{employee.address}</td>
                       <td>
                         <span className={`highlighter highlighter--${employee.state == 'activo' ? 'green' : 'red'}`}>

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import logo from '../assets/img/AdminLTELogo.png'
+import logo from '../assets/media/img/AdminLTELogo.png'
 
 
 function MainAside() {
