@@ -5,6 +5,12 @@
     margin: auto;
     overflow: hidden;
 }
+.default-photo__container--td{
+    width: 3em;
+    height: 3em;
+    margin: auto;
+    overflow: hidden;
+}
 .default-photo{
     object-fit: cover;
 }

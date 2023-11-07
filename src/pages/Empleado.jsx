@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import '../stylesheets/Usuario.css'
+import '../stylesheets/FormEmpleadoAdd.css'
 import { useModal } from '../hookscustom/useModal';
 import Modal from '../components/Modal';
 import NavWithSearch from '../components/NavWithSearch';
@@ -29,7 +30,7 @@ const Empleado = () => {
 
       // let arrayNameEmployees=employees.map(name=> name.employee_name+' '+name.paternal_surname+' '+name.maternal_surname);
 
-      let arrayFilterByName=employees.filter(name=>(name.employee_name+' '+name.paternal_surname+' '+name.maternal_surname).includes(employeeName))
+      let arrayFilterByName = employees.filter(name => (name.employee_name + ' ' + name.paternal_surname + ' ' + name.maternal_surname).includes(employeeName))
       setEmployees(arrayFilterByName)
       // console.log(arrayFilterByName);
     }
@@ -39,12 +40,16 @@ const Empleado = () => {
     const data = await response.json();
     console.log(data);
     setEmployees(data);
-    initialStateEmployees=[...data]
+    initialStateEmployees = [...data]
     // console.log(initialStateEmployees);
   }
 
-  const deleteEmployee = async (id) => {
+  const deleteEmployee = async (id,profilePhoto) => {
+    const domain='http://localhost:3000';
+    const image=profilePhoto.substring(domain.length+1,profilePhoto.length)
     // console.log(id);
+    // console.log(nameImgUrl);
+
     Swal.fire({
       title: '¿Está seguro de eliminar este empleado?',
       text: "¡No podrá revertir!",
@@ -55,7 +60,7 @@ const Empleado = () => {
       confirmButtonText: 'Aceptar'
     }).then(async (result) => {
       if (result.isConfirmed) {
-        await fetch("http://localhost:3000/empleado/delete/" + id, {
+        await fetch("http://localhost:3000/empleado/delete/" + id +'/'+ image , {
           method: "DELETE",
         });
         setEmployees(employees.filter(employee => employee.id !== id));
@@ -157,7 +162,12 @@ const Empleado = () => {
                   return (
                     <tr key={employee.id}>
                       <th scope="row">{index + 1}</th>
-                      <td>{employee.profile_photo}</td>
+                      <td>
+                        <div className='default-photo__container default-photo__container--td'>
+                          <img src={employee.profile_photo} alt={employee.employee_name} />
+                        </div>
+                      </td>
+
                       <td>{employee.nro_document}</td>
                       <td>
                         {
@@ -184,7 +194,7 @@ const Empleado = () => {
                         <button
                           type="button"
                           className="btn btn-warning me-1"
-                          onClick={() => { deleteEmployee(employee.id) }}>
+                          onClick={() => { deleteEmployee(employee.id,employee.profile_photo) }}>
                           <i className="bi bi-trash-fill text--white"></i>
                         </button>
                       </td>

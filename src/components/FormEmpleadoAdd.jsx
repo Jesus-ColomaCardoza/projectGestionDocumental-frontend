@@ -12,7 +12,6 @@ const FormEmpleadoAdd = ({
   handleTable,
 }) => {
   
-  let temporalPhoto = document.getElementById('profile_photo__img')
   const initialEmployeeDates = {
     nro_document: '',
     employee_name: '',
@@ -24,8 +23,10 @@ const FormEmpleadoAdd = ({
     address: '',
     // state:''
   }
+
   const [employee, setEmployee] = useState(initialEmployeeDates);
   const [photo, setPhoto] = useState(null);
+  const [temporalPhoto, setTemporalPhoto] = useState(defaultPhoto);
 
 
   const handleChange = (e) => {
@@ -38,14 +39,14 @@ const FormEmpleadoAdd = ({
     if (e.target.files[0]) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        temporalPhoto.src = e.target.result;
+        setTemporalPhoto(e.target.result);
       }
-      reader.readAsDataURL(e.target.files[0])
-      //change the state of photo
+      reader.readAsDataURL(e.target.files[0]);
       setPhoto(e.target.files[0]);
       // console.log(e.target.files[0]);
     } else {
-      temporalPhoto.src = defaultPhoto;
+      setTemporalPhoto(defaultPhoto);
+      setPhoto(null);   
     }
   }
 
@@ -82,8 +83,11 @@ const FormEmpleadoAdd = ({
     handleButton2();
     //cambiar el estado de la tabla user
     handleTable();
-    //reset el object userDates
-    setEmployee(initialEmployeeDates)
+    //reset el object employeeDates
+    setEmployee(initialEmployeeDates);
+    //reset the photo in form
+    setPhoto(null)
+    setTemporalPhoto(defaultPhoto);
   }
 
   return (
@@ -93,7 +97,7 @@ const FormEmpleadoAdd = ({
           <strong className=''>Foto de Perfil</strong>
           <div className="col-md-12 text-center ">
             <div className='default-photo__container'>
-              <img src={defaultPhoto} alt="default Photo Employee" className='default-photo' id='profile_photo__img' />
+              <img src={temporalPhoto} alt="default Photo Employee" className='default-photo' id='profile_photo__img' />
             </div>
             <input required type="file" className="d-none" name='profile_photo' id='profile_photo__input' onChange={handleSelectedFile} />
             <label htmlFor="profile_photo__input" className="btn btn-dark mt-2">Selecionar foto</label>
