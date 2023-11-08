@@ -6,7 +6,7 @@ import Modal from '../components/Modal';
 import NavWithSearch from '../components/NavWithSearch';
 import HeaderWithButton from '../components/HeaderWithButton';
 import FormEmpleadoAdd from '../components/FormEmpleadoAdd';
-import FormUserUpdate from '../components/FormUserUpdate';
+import FormEmpleadoUpdate from '../components/FormEmpleadoUpdate';
 import { alertMessage } from '../libraries/alertMessage';
 
 let initialStateEmployees;
@@ -17,8 +17,8 @@ const Empleado = () => {
   const [employeeName, setEmployeeName] = useState('');
 
   const [employeeId, setEmployeeId] = useState(null);
-  const [modalAddUser, openModalAddUser, closeModalAddUser] = useModal(false);
-  const [modalUpdateUser, openModalUpdateUser, closeModalUpdateUser] = useModal(false);
+  const [modalAddEmployee, openModalAddEmployee, closeModalAddEmployee] = useModal(false);
+  const [modalUpdateEmployee, openModalUpdateEmployee, closeModalUpdateEmployee] = useModal(false);
 
 
   const loadEmployeeByName = async () => {
@@ -89,8 +89,8 @@ const Empleado = () => {
       {/* add user Modal , the handle table get can improve with query to the backend*/}
       <Modal
         title='Nuevo Empleado'
-        isOpen={modalAddUser}
-        closeModal={closeModalAddUser}
+        isOpen={modalAddEmployee}
+        closeModal={closeModalAddEmployee}
         size='medium'
       >
         <FormEmpleadoAdd
@@ -98,29 +98,28 @@ const Empleado = () => {
           textButton2='Cancelar'
           typeButton1='success'
           typeButton2='secondary'
-          handleButton2={closeModalAddUser}
+          handleButton2={closeModalAddEmployee}
           handleTable={loadEmployees}
         />
       </Modal>
 
       {/* update user Modal */}
-      {/* <Modal
+      <Modal
         title='Modificación de Empleado'
-        isOpen={modalUpdateUser}
-        closeModal={closeModalUpdateUser}
+        isOpen={modalUpdateEmployee}
+        closeModal={closeModalUpdateEmployee}
+        size='medium'
       >
-        <FormUserUpdate
-          id={userId}
+        <FormEmpleadoUpdate
+          id={employeeId}
           textButton1='Modificar'
           textButton2='Cancelar'
           typeButton1='danger'
           typeButton2='secondary'
-          handleButton2={closeModalUpdateUser}
-          handleTable={loadUsers}
-          stateEmployees={employees}
-          stateAreas={areas}
+          handleButton2={closeModalUpdateEmployee}
+          handleTable={loadEmployees}
         />
-      </Modal> */}
+      </Modal>
       {/* ----------- */}
 
       <header>
@@ -133,7 +132,7 @@ const Empleado = () => {
           textNav='Listado de Empleado'
           textButton='Nuevo Registro'
           typeButton='success'
-          openModal={openModalAddUser}
+          openModal={openModalAddEmployee}
         />
 
         <NavWithSearch
@@ -188,7 +187,7 @@ const Empleado = () => {
                         <button
                           type="button"
                           className="btn btn-info me-1"
-                          onClick={() => { openModalUpdateUser(), setEmployeeId(employee.id) }}>
+                          onClick={() => { openModalUpdateEmployee(), setEmployeeId(employee.id) }}>
                           <i className="bi bi-pencil-fill text--white"></i>
                         </button>
                         <button

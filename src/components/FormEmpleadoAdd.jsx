@@ -11,7 +11,7 @@ const FormEmpleadoAdd = ({
   handleButton2,
   handleTable,
 }) => {
-  
+
   const initialEmployeeDates = {
     nro_document: '',
     employee_name: '',
@@ -46,7 +46,7 @@ const FormEmpleadoAdd = ({
       // console.log(e.target.files[0]);
     } else {
       setTemporalPhoto(defaultPhoto);
-      setPhoto(null);   
+      setPhoto(null);
     }
   }
 
@@ -55,6 +55,10 @@ const FormEmpleadoAdd = ({
     e.preventDefault();
 
     try {
+      if (photo==null) {
+        throw new Error('Seleccione foto de perfil');
+      }
+
       const formData = new FormData();
       const arrayEntries = Object.entries(employee);
 
@@ -75,19 +79,19 @@ const FormEmpleadoAdd = ({
       setPhoto(null)
       //we show the confirmed modal  
       alertMessage('Registro exitoso!', 'El empleado has sido registrado', 'success', 'OK', '#28A745');
+      //we close the modal window
+      handleButton2();
+      //cambiar el estado de la tabla user
+      handleTable();
+      //reset el object employeeDates
+      setEmployee(initialEmployeeDates);
+      //reset the photo in form
+      setPhoto(null)
+      setTemporalPhoto(defaultPhoto);
     } catch (error) {
       alertMessage('Error!', error, 'error', 'OK', '#d33');
       console.log(error);
     }
-    //we close the modal window
-    handleButton2();
-    //cambiar el estado de la tabla user
-    handleTable();
-    //reset el object employeeDates
-    setEmployee(initialEmployeeDates);
-    //reset the photo in form
-    setPhoto(null)
-    setTemporalPhoto(defaultPhoto);
   }
 
   return (
@@ -99,7 +103,7 @@ const FormEmpleadoAdd = ({
             <div className='default-photo__container'>
               <img src={temporalPhoto} alt="default Photo Employee" className='default-photo' id='profile_photo__img' />
             </div>
-            <input required type="file" className="d-none" name='profile_photo' id='profile_photo__input' onChange={handleSelectedFile} />
+            <input hidden type="file" name='profile_photo' id='profile_photo__input' onChange={handleSelectedFile} />
             <label htmlFor="profile_photo__input" className="btn btn-dark mt-2">Selecionar foto</label>
           </div>
         </div>
@@ -137,14 +141,6 @@ const FormEmpleadoAdd = ({
           <label htmlFor="inputEmail4" className="form-label">Correo</label>
           <input required type="email" className="form-control" name='email' onChange={handleChange} />
         </div>
-        {/* <div className="col-md-6">
-          <label className="form-label">Estatus</label>
-          <select className="form-select" name='state' onChange={handleChange} value={employee.state}>
-            <option disabled key={-1}>Seleccionar estado</option>
-            <option key={0} value={'activo'}>activo</option>
-            <option key={1} value={'inactivo'}>inactivo</option>
-          </select>
-        </div> */}
         <div className="col-12 d-flex justify-content-end">
           <button type="submit" className={`btn btn-${typeButton1} ms-1`}>{textButton1}</button>
           <button type="button" className={`btn btn-${typeButton2} ms-1`} onClick={handleButton2}>{textButton2}</button>
