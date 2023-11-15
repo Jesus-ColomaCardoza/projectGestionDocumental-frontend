@@ -8,13 +8,26 @@ import { alertMessage } from '../libraries/alertMessage';
 import { getDateTime } from '../libraries/application';
 import FormAreaAdd from '../components/FormAreaAdd';
 import FormAreaUpdate from '../components/FormAreaUpdate';
+import Pagination from '../components/Pagination';
 
 const Area = () => {
+  //state varibles: areas data 
   const [areas, setAreas] = useState([]);
   const [areaName, setAreaName] = useState('');
-  const [ areaId, setAreaId] = useState(null);
+  const [areaId, setAreaId] = useState(null);
+  //state varibles: modal windows 
   const [modalAddArea, openModalAddArea, closeModalAddArea] = useModal(false);
   const [modalUpdateArea, openModalUpdateArea, closeModalUpdateArea] = useModal(false);
+  //state varibles: pagination 
+  const [dataQuantity, setDataQuantity] = useState(3)
+  const [currentPage, setCurrentPage] = useState(1)
+
+
+  const indexFinal = currentPage * dataQuantity;
+  const indexInitial = indexFinal - dataQuantity;
+  const nData = areas.slice(indexInitial, indexFinal);
+  const nPages = Math.ceil(areas.length / dataQuantity);
+
 
   const loadAreas = async () => {
     const response = await fetch('http://localhost:3000/area/getlist/');
@@ -27,6 +40,8 @@ const Area = () => {
       const response = await fetch("http://localhost:3000/area/getbyname/" + areaName);
       const data = await response.json();
       setAreas(data);
+      //we reset from first page, to show the results
+      setCurrentPage(1);
       //console.log(data);
     }
   }
@@ -72,15 +87,15 @@ const Area = () => {
         isOpen={modalAddArea}
         closeModal={closeModalAddArea}
       >
-       <FormAreaAdd 
-        textButton1='Registrar'
-        textButton2='Cancelar'
-        typeButton1='success'
-        typeButton2='secondary'
-        handleButton2={closeModalAddArea}
-        handleTable={loadAreas}
-        allAreas={areas}
-       />
+        <FormAreaAdd
+          textButton1='Registrar'
+          textButton2='Cancelar'
+          typeButton1='success'
+          typeButton2='secondary'
+          handleButton2={closeModalAddArea}
+          handleTable={loadAreas}
+          allAreas={areas}
+        />
       </Modal>
 
       {/* update user Modal */}
@@ -89,15 +104,15 @@ const Area = () => {
         isOpen={modalUpdateArea}
         closeModal={closeModalUpdateArea}
       >
-       <FormAreaUpdate
-        id={areaId}
-        textButton1='Modificar'
-        textButton2='Cancelar'
-        typeButton1='danger'
-        typeButton2='secondary'
-        handleButton2={closeModalUpdateArea}
-        handleTable={loadAreas}
-       /> 
+        <FormAreaUpdate
+          id={areaId}
+          textButton1='Modificar'
+          textButton2='Cancelar'
+          typeButton1='danger'
+          typeButton2='secondary'
+          handleButton2={closeModalUpdateArea}
+          handleTable={loadAreas}
+        />
       </Modal>
       {/* ----------- */}
 
@@ -117,6 +132,8 @@ const Area = () => {
         <NavWithSearch
           nameSearch={areaName}
           handleSearch={handleSearchAreaName}
+          setDataQuantity={setDataQuantity}
+          setCurrentPage={setCurrentPage}
         />
 
         <div className='custom-scroll'>
@@ -132,7 +149,7 @@ const Area = () => {
             </thead>
             <tbody>
               {
-                areas.map((area, index) => {
+                nData.map((area, index) => {
                   return (
                     <tr key={area.id}>
                       <th scope="row">{index + 1}</th>
@@ -165,6 +182,11 @@ const Area = () => {
           </table>
         </div>
 
+        <Pagination
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          nPages={nPages}
+        />
       </div>
     </div>
 

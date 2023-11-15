@@ -5,6 +5,7 @@ import '../stylesheets/FormEmpleadoAdd.css'
 
 const FormEmpleadoUpdate = ({
   id,
+  image,
   textButton1,
   textButton2,
   typeButton1,
@@ -54,54 +55,49 @@ const FormEmpleadoUpdate = ({
     e.preventDefault();
 
     try {
-      if (photo==null && temporalPhoto==defaultPhoto) {
-         throw new Error('Seleccione foto de perfil');
-         
-      }else if (photo == null && temporalPhoto!=defaultPhoto) {
-        throw new Error('change without photo');
-        //we update without change the url image
-        // const response = await fetch('http://localhost:3000/empleado/update/'+id, {
-        //   method: 'POST',
-        //   body: formData,
-        // })
-        // const data = await response.json();
-        // console.log(data);
+      //we validate that there aren't anything photo uploaded
+      if (photo == null && temporalPhoto == defaultPhoto) {
+        throw new Error('Seleccione foto de perfil');
+
+      } else if (photo == null && temporalPhoto != defaultPhoto) {
+        //we update only the data employee without change his url image
+        const response = await fetch('http://localhost:3000/empleado/update/' + id, {
+          method: 'PUT',
+          body: JSON.stringify(employee),
+          headers: { 'Content-type': 'application/json' }
+        })
+        const data = await response.json();
+        console.log(data);
+        //we show the confirmed modal  
+        alertMessage('Modificación exitoso!', 'El empleado has sido modificado', 'success', 'OK', '#28A745');
+        //we close the modal window
+        handleButton2();
+        //cambiar el estado de la tabla user
+        handleTable();
       } else {
-        throw new Error('change with photo');
-      
-        // //we update including the change the url image
-        // const formData = new FormData();
-        // const arrayEntries = Object.entries(employee);
+        //we update the data employee and too change his url image
+        const formData = new FormData();
+        const arrayEntries = Object.entries(employee);
 
-        // formData.append('profile_photo', photo);
-        // arrayEntries.forEach(element => {
-        //   formData.append(element[0], element[1]);
-        // });
+        formData.append('profile_photo', photo);
+        arrayEntries.forEach(element => {
+          formData.append(element[0], element[1]);
+        });
 
-        // const response = await fetch('http://localhost:3000/empleado/update/'+id, {
-        //   method: 'POST',
-        //   body: formData,
-        // })
-        // const data = await response.json();
-        // console.log(data);
+        const response = await fetch('http://localhost:3000/empleado/update/' + id + '/' + image, {
+          method: 'PUT',
+          body: formData,
+        })
+        const data = await response.json();
+        console.log(data);
+        //we show the confirmed modal  
+        alertMessage('Modificación exitoso!', 'El empleado has sido modificado', 'success', 'OK', '#28A745');
+        //we close the modal window
+        handleButton2();
+        //cambiar el estado de la tabla user
+        handleTable();
+        console.log('change the image');
       }
-
-
-      // //we reset the add user form      
-      // e.target.reset();
-      // //we reset the setPhoto
-      // setPhoto(null)
-      // //we show the confirmed modal  
-      // alertMessage('Registro exitoso!', 'El empleado has sido registrado', 'success', 'OK', '#28A745');
-      // //we close the modal window
-      // handleButton2();
-      // //cambiar el estado de la tabla user
-      // handleTable();
-      // //reset el object employeeDates
-      // setEmployee(initialEmployeeDates);
-      // //reset the photo in form
-      // setPhoto(null)
-      // setTemporalPhoto(defaultPhoto);
     } catch (error) {
       alertMessage('Error!', error, 'error', 'OK', '#d33');
       console.log(error);
@@ -180,7 +176,12 @@ const FormEmpleadoUpdate = ({
         </div>
         <div className="col-12 d-flex justify-content-end">
           <button type="submit" className={`btn btn-${typeButton1} ms-1`}>{textButton1}</button>
-          <button type="button" className={`btn btn-${typeButton2} ms-1`} onClick={handleButton2}>{textButton2}</button>
+          <button type="button" className={`btn btn-${typeButton2} ms-1`} onClick={() => {
+            handleButton2();
+            //At the moment user decide to come back to his initial dates
+            setTemporalPhoto(employee.profile_photo) //to reset the photo profile
+                                                     //employee data reset needs to be development
+          }}>{textButton2}</button>
         </div>
       </form>
     </>

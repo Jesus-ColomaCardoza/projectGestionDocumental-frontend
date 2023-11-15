@@ -21,7 +21,6 @@ const FormEmpleadoAdd = ({
     phone: '',
     email: '',
     address: '',
-    // state:''
   }
 
   const [employee, setEmployee] = useState(initialEmployeeDates);
@@ -55,7 +54,7 @@ const FormEmpleadoAdd = ({
     e.preventDefault();
 
     try {
-      if (photo==null) {
+      if (photo==null && temporalPhoto==defaultPhoto) {
         throw new Error('Seleccione foto de perfil');
       }
 
@@ -73,10 +72,11 @@ const FormEmpleadoAdd = ({
       })
       const data = await response.json();
       console.log(data);
-      //we reset the add user form      
+      //we reset the form      
       e.target.reset();
-      //we reset the setPhoto
+      //we reset the photo and temporalPhoto
       setPhoto(null)
+      setTemporalPhoto(defaultPhoto);
       //we show the confirmed modal  
       alertMessage('Registro exitoso!', 'El empleado has sido registrado', 'success', 'OK', '#28A745');
       //we close the modal window
@@ -85,9 +85,6 @@ const FormEmpleadoAdd = ({
       handleTable();
       //reset el object employeeDates
       setEmployee(initialEmployeeDates);
-      //reset the photo in form
-      setPhoto(null)
-      setTemporalPhoto(defaultPhoto);
     } catch (error) {
       alertMessage('Error!', error, 'error', 'OK', '#d33');
       console.log(error);

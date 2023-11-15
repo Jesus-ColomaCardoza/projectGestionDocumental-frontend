@@ -8,6 +8,7 @@ import HeaderWithButton from '../components/HeaderWithButton';
 import FormEmpleadoAdd from '../components/FormEmpleadoAdd';
 import FormEmpleadoUpdate from '../components/FormEmpleadoUpdate';
 import { alertMessage } from '../libraries/alertMessage';
+import { removeDomain } from '../libraries/application';
 
 let initialStateEmployees;
 
@@ -17,6 +18,7 @@ const Empleado = () => {
   const [employeeName, setEmployeeName] = useState('');
 
   const [employeeId, setEmployeeId] = useState(null);
+  const [employeeImage, setEmployeeImage] = useState(null);
   const [modalAddEmployee, openModalAddEmployee, closeModalAddEmployee] = useModal(false);
   const [modalUpdateEmployee, openModalUpdateEmployee, closeModalUpdateEmployee] = useModal(false);
 
@@ -44,12 +46,9 @@ const Empleado = () => {
     // console.log(initialStateEmployees);
   }
 
-  const deleteEmployee = async (id,profilePhoto) => {
-    const domain='http://localhost:3000';
-    const image=profilePhoto.substring(domain.length+1,profilePhoto.length)
+  const deleteEmployee = async (id, image) => {
     // console.log(id);
-    // console.log(nameImgUrl);
-
+    // console.log(image);
     Swal.fire({
       title: '¿Está seguro de eliminar este empleado?',
       text: "¡No podrá revertir!",
@@ -60,7 +59,7 @@ const Empleado = () => {
       confirmButtonText: 'Aceptar'
     }).then(async (result) => {
       if (result.isConfirmed) {
-        await fetch("http://localhost:3000/empleado/delete/" + id +'/'+ image , {
+        await fetch("http://localhost:3000/empleado/delete/" + id + '/' + image, {
           method: "DELETE",
         });
         setEmployees(employees.filter(employee => employee.id !== id));
@@ -112,6 +111,7 @@ const Empleado = () => {
       >
         <FormEmpleadoUpdate
           id={employeeId}
+          image={employeeImage}
           textButton1='Modificar'
           textButton2='Cancelar'
           typeButton1='danger'
@@ -187,13 +187,22 @@ const Empleado = () => {
                         <button
                           type="button"
                           className="btn btn-info me-1"
-                          onClick={() => { openModalUpdateEmployee(), setEmployeeId(employee.id) }}>
+                          onClick={() => {
+                            openModalUpdateEmployee();
+                            setEmployeeId(employee.id);
+                            setEmployeeImage(removeDomain(employee.profile_photo))
+                          }}>
                           <i className="bi bi-pencil-fill text--white"></i>
                         </button>
                         <button
                           type="button"
                           className="btn btn-warning me-1"
-                          onClick={() => { deleteEmployee(employee.id,employee.profile_photo) }}>
+                          onClick={() => {
+                            deleteEmployee(
+                              employee.id,
+                              removeDomain(employee.profile_photo)
+                            )
+                          }}>
                           <i className="bi bi-trash-fill text--white"></i>
                         </button>
                       </td>

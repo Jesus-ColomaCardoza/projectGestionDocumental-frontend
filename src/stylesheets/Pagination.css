@@ -1,0 +1,7 @@
+.pagination{
+    border-top:.5em solid #f8f9fa;
+}
+.page-link{
+    color: #555;
+    font-weight: bold;
+}

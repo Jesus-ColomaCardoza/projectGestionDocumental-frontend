@@ -186,7 +186,7 @@ const Usuario = () => {
                       <td>{user.user_name}</td>
                       <td>{user.Area.area_name}</td>
                       <td>{user.role}</td>
-                      <td>{
+                      <td className='text-break'>{
                         user.Empleado.employee_name + ' ' +
                         user.Empleado.paternal_surname + ' ' +
                         user.Empleado.maternal_surname

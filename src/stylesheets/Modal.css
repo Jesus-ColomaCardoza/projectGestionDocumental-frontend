@@ -28,6 +28,8 @@
     max-height: 90vh;
     overflow-y: auto;
     border-radius: .3em;
+    border-top: .5em solid  rgb(139, 146, 138);
+
 }
 .modal-custom__container--medium{
     min-width: 50%;
@@ -40,6 +42,6 @@
     top: .5em;
     right: .5em;
     font-weight: bold;
-    border: .1em solid #aaa;
+    color: #999;
 }
 
