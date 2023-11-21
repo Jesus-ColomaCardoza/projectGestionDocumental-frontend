@@ -1,5 +1,4 @@
 import '../templates/AdminLTE-3.2.0/plugins/icheck-bootstrap/icheck-bootstrap.min.css'
-import '../templates/AdminLTE-3.2.0/dist/css/adminlte.min.css'
 
 function Login() {
   return (

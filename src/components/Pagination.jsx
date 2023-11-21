@@ -2,7 +2,9 @@ import '../stylesheets/Pagination.css'
 const Pagination = ({
   currentPage,
   setCurrentPage,
-  nPages
+  nPages,
+  indexInitial,
+  indexFinal
 }) => {
 
   const next = () => {
@@ -14,8 +16,11 @@ const Pagination = ({
 
   return (
     <>
-      <div aria-label="Page navigation">
-        <ul className="pagination justify-content-end py-2 pe-3">
+      <div aria-label="Page navigation" className='mt-3 p-2 d-flex justify-content-between align-items-center  border-top  border-secondary'>
+        <div>
+          <p className='m-0'>Mostrando del ({indexInitial+1 + ' al '+indexFinal}) total de {(indexFinal-indexInitial)*nPages} registros</p>
+        </div>
+        <ul className="pagination justify-content-end border-0 m-0">
           <li className="page-item page-link bg-body-secondary" onClick={previous}>
             <i className="bi bi-caret-left-fill"></i>
           </li>

@@ -30,7 +30,7 @@ function MainAside() {
           <ul className="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
             <li className="nav-item">
-              <Link to="/home/tramite" className="nav-link">
+              <Link to="/home/tramite/lista" className="nav-link">
                 <i className="nav-icon fas fa-book"></i>
                 <p>Trámite</p>
               </Link>

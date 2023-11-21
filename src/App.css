@@ -17,7 +17,7 @@
     left: 0;
 }
 .custom-fixed{
-    position:fixed;
+    position:fixed !important;
 }
 
 /* highlighter */

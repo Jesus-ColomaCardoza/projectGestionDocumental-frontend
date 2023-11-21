@@ -185,6 +185,8 @@ const Area = () => {
         <Pagination
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
+          indexInitial={indexInitial}
+          indexFinal={indexFinal}
           nPages={nPages}
         />
       </div>
