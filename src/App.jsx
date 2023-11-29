@@ -10,12 +10,7 @@ import FormTramiteAdd from './components/FormTramiteAdd'
 import './App.css'
 
 function App() {
-  const bb=document.querySelector('.sidebar-mini');
-  const ff=document.getElementById('sidebar-overlay');
-  ff.addEventListener('click',()=>{
-    bb.classList.replace('sidebar-open','sidebar-closed')
-    bb.classList.add('sidebar-collapse')
-  })
+
   return (
     <>
       <BrowserRouter>

@@ -19,6 +19,11 @@
 .custom-fixed{
     position:fixed !important;
 }
+.custom-fixed--top{
+    position: sticky !important;
+    top: 0;
+    right: 0;
+}
 
 /* highlighter */
 .highlighter{

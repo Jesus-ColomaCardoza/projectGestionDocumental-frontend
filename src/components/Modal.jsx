@@ -11,7 +11,7 @@ const Modal = ({ children, title, isOpen, closeModal, size }) => {
         >
           X
         </button>
-        <h3 className='mb-4 text-center'>{title}</h3>
+        <h3 className='mb-4 text-center fs-4'>{title}</h3>
         {children}
       </div>
 
