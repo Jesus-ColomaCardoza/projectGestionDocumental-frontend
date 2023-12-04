@@ -1,0 +1,132 @@
+import React, { useState,useEffect } from 'react';
+import { alertMessage } from '../libraries/alertMessage';
+import defaultPhoto from '../assets/media/img/defaultPhoto.png'
+
+const FormDocumentAdd = ({
+  textButton1,
+  textButton2,
+  typeButton1,
+  typeButton2,
+  handleButton2,
+  documents,
+  typeSource
+}) => {
+
+  const initialDocumentDates = {
+    id: '',
+    subject: '',
+    file_url: '',//
+    state: '', // in back end 
+    type_document:'',
+    type_source:'',
+    createdAt:'',
+    id_procedure:''//
+  }
+
+  const [tiposDocumento, setTiposDocumento] = useState([]);
+  const [document, setDocument] = useState(initialDocumentDates)
+
+  const [photo, setPhoto] = useState(null);
+  const [temporalPhoto, setTemporalPhoto] = useState(defaultPhoto);
+
+
+  const handleChange = (e) => {
+    setDocument({ ...document, [e.target.name]: e.target.value });
+    console.log(document);
+    // formData.append(e.target.name,e.target.value)
+  };
+
+  const handleSelectedFile = (e) => {
+    if (e.target.files[0]) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setTemporalPhoto(e.target.result);
+      }
+      reader.readAsDataURL(e.target.files[0]);
+      setPhoto(e.target.files[0]);
+      // console.log(e.target.files[0]);
+    } else {
+      setTemporalPhoto(defaultPhoto);
+      setPhoto(null);
+    }
+  }
+
+  const addDocument = async (e) => {
+
+    e.preventDefault();
+
+      // //we add the current date
+      // document.createdAt=new Date();
+      // alert(document.createdAt)
+
+    try {
+     
+
+      // //we add the current date
+      document.createdAt=Date.now();
+      document.type_source=typeSource;
+
+      documents.push(document);
+
+      e.target.reset();
+
+      
+      alertMessage('Registro exitoso!', 'El empleado has sido registrado', 'success', 'OK', '#28A745');
+      
+      handleButton2();
+      
+      setDocument(initialDocumentDates);
+    } catch (error) {
+      alertMessage('Error!', error, 'error', 'OK', '#d33');
+    }
+  }
+
+  
+  const loadTiposDocumento = async () => {
+    const response = await fetch('http://localhost:3000/tipodocumento/getlist/');
+    const data = await response.json();
+    setTiposDocumento(data);
+    // console.log(data);
+  }
+
+  useEffect(() => { loadTiposDocumento() }, []);
+
+
+  return (
+    <>
+          <form className="row g-2 px-3" encType="multipart/form-data" onSubmit={addDocument}>
+            <div className="col-12 col-md-7">
+              <label className="form-label">Tipo de Documento</label>
+              <select className="form-select" name='type_document' onChange={handleChange} defaultValue={-1}>
+                <option disabled key={-1} value={-1}>Seleccionar tipo de documento</option>
+                {
+                  tiposDocumento.map((td) => {
+                    return <option key={td.id} value={td.id} >{td.description}</option>
+                  })
+                }
+              </select>
+            </div>
+            <div className="col-12 col-md-5">
+              <label htmlFor="id" className="">Código de Documento</label>
+              <input required type="text" className="form-control" name='id' id='id' onChange={handleChange} />
+            </div>
+            <div className="col-12">
+              <label htmlFor="subject" className="form-label">Asunto</label>
+              <textarea  required className="form-control" name='subject' onChange={handleChange} rows="2"></textarea>
+            </div>
+
+            <div className="col-12 col-md-12 ">
+              <label htmlFor="document" className="form-label">Selecionar documento</label>
+              <input  single='true' type="file" className="form-control" name='document' id='document' accept='.pdf' onChange={handleSelectedFile} />
+            </div>
+
+            <div className="col-12 text-end pt-1 ">
+            <button type="submit" className={`btn btn-${typeButton1} ms-1`}>{textButton1}</button>
+          <button type="button" className={`btn btn-${typeButton2} ms-1`} onClick={handleButton2}>{textButton2}</button>
+            </div>
+          </form>
+    </>
+  )
+}
+
+export default FormDocumentAdd

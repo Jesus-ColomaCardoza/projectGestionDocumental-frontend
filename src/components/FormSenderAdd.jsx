@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 import { alertMessage } from '../libraries/alertMessage';
 import defaultPhoto from '../assets/media/img/defaultPhoto.png'
-import '../stylesheets/FormEmpleadoAdd.css'
 
-const FormEmpleadoAdd = ({
+
+
+const FormSenderAdd = ({
   textButton1,
   textButton2,
   typeButton1,
   typeButton2,
   handleButton2,
-  handleTable,
+  handleTable
 }) => {
 
   const initialEmployeeDates = {
@@ -91,54 +92,68 @@ const FormEmpleadoAdd = ({
     }
   }
 
+
   return (
     <>
-      <form className="row g-3" encType="multipart/form-data" onSubmit={addEmployee}>
-        <div className="col-md-5 d-flex flex-wrap justify-content-center align-items-center">
-          <strong className=''>Foto de Perfil</strong>
-          <div className="col-md-12 text-center ">
-            <div className='default-photo__container'>
-              <img src={temporalPhoto} alt="default Photo Employee" className='default-photo' id='profile_photo__img' />
-            </div>
-            <input hidden type="file" name='profile_photo' id='profile_photo__input' accept="image/jpeg, image/png, image/gif" onChange={handleSelectedFile} />
-            <label htmlFor="profile_photo__input" className="btn btn-dark mt-2">Selecionar foto</label>
-          </div>
+      <form className="row g-2 px-3" encType="multipart/form-data" onSubmit={addEmployee}>
+        <div className="col-4">
+          <label htmlFor="nro_document" className="">Nro Documento</label>
+          <input required type="text" className="form-control" name='nro_document' id='nro_document' onChange={handleChange} />
         </div>
-        <div className="col-md-7">
-          <div className="col-md-12 mb-2">
-            <label htmlFor="nro_document" className="">Nro Documento</label>
-            <input required type="text" className="form-control" name='nro_document' id='nro_document' onChange={handleChange} />
-          </div>
-          <div className="col-md-12 mb-2">
-            <label htmlFor="inputEmail4" className="form-label">Nombres</label>
-            <input required type="text" className="form-control" name='employee_name' onChange={handleChange} />
-          </div>
-          <div className="col-md-12 mb-2">
-            <label htmlFor="inputEmail4" className="form-label">Apellido Paterno</label>
-            <input required type="text" className="form-control" name='paternal_surname' onChange={handleChange} />
-          </div>
-          <div className="col-md-12 mb-2">
-            <label htmlFor="inputEmail4" className="form-label">Apellido Materno</label>
-            <input required type="text" className="form-control" name='maternal_surname' onChange={handleChange} />
-          </div>
+        <div className="col-8">
+          <label htmlFor="inputEmail4" className="form-label">Nombres</label>
+          <input required type="text" className="form-control" name='employee_name' onChange={handleChange} />
         </div>
-        <div className="col-md-6">
+        <div className="col-6">
+          <label htmlFor="inputEmail4" className="form-label">Apellido Paterno</label>
+          <input required type="text" className="form-control" name='paternal_surname' onChange={handleChange} />
+        </div>
+        <div className="col-6">
+          <label htmlFor="inputEmail4" className="form-label">Apellido Materno</label>
+          <input required type="text" className="form-control" name='maternal_surname' onChange={handleChange} />
+        </div>
+        <div className="col-6">
           <label htmlFor="inputEmail4" className="form-label">Fecha de Nacimiento</label>
           <input required type="date" className="form-control" name='date_birth' onChange={handleChange} />
         </div>
-        <div className="col-md-6">
+        <div className="col-6">
           <label htmlFor="inputEmail4" className="form-label">Teléfono</label>
           <input required type="text" className="form-control" name='phone' onChange={handleChange} />
         </div>
-        <div className="col-md-6">
-          <label htmlFor="inputEmail4" className="form-label">Dirección</label>
-          <input required type="text" className="form-control" name='address' onChange={handleChange} />
-        </div>
-        <div className="col-md-6">
+        <div className="col-6">
           <label htmlFor="inputEmail4" className="form-label">Correo</label>
           <input required type="email" className="form-control" name='email' onChange={handleChange} />
         </div>
-        <div className="col-12 d-flex justify-content-end">
+        <div className="col-6">
+          <label htmlFor="inputEmail4" className="form-label">Dirección</label>
+          <input required type="text" className="form-control" name='address' onChange={handleChange} />
+        </div>
+        <div className="col-12">
+          <label htmlFor="inputEmail4" className="form-label d-block">En Representación</label>
+          <div className="row">
+            <div className="col-4 text-center">
+              <input type="radio" name="in_representation" id="toOwnName" value={'A nombre propio'} className="form-check-input" />
+              <label htmlFor="toOwnName" className="form-check-label">A nombre propio</label>
+            </div>
+            <div className="col-4 text-center">
+              <input type="radio" name="in_representation" id="toOtherNaturalPerson" value={'A otra persona natural'} className="form-check-input" />
+              <label htmlFor="toOtherNaturalPerson" className="form-check-label">A otra persona natural</label>
+            </div>
+            <div className="col-4 text-center">
+              <input type="radio" name="in_representation" id="JuridicPerson" value={'Persona jurídica'} className="form-check-input" />
+              <label htmlFor="JuridicPerson" className="form-check-label">Persona jurídica</label>
+            </div>
+          </div>
+        </div>
+        <div className="col-6">
+          <label htmlFor="inputEmail4" className="form-label">RUC</label>
+          <input required type="text" className="form-control" name='ruc' onChange={handleChange} />
+        </div>
+        <div className="col-6">
+          <label htmlFor="inputEmail4" className="form-label">Razón Social</label>
+          <input required type="email" className="form-control" name='razon_social' onChange={handleChange} />
+        </div>
+        <div className="col-12 text-end pt-1 ">
           <button type="submit" className={`btn btn-${typeButton1} ms-1`}>{textButton1}</button>
           <button type="button" className={`btn btn-${typeButton2} ms-1`} onClick={handleButton2}>{textButton2}</button>
         </div>
@@ -147,4 +162,4 @@ const FormEmpleadoAdd = ({
   )
 }
 
-export default FormEmpleadoAdd
+export default FormSenderAdd

@@ -1,9 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { alertMessage } from '../libraries/alertMessage';
-import defaultPhoto from '../assets/media/img/defaultPhoto.png'
 import { useNavigate } from 'react-router-dom';
 import Modal from './Modal';
 import { useModal } from '../hookscustom/useModal';
+import FormSenderAdd from './FormSenderAdd';
+import FormProcedureAdd from './FormProcedureAdd';
+import FormDocumentAdd from './FormDocumentAdd';
+
+//images
+import defaultPhoto from '../assets/media/img/defaultPhoto.png'
+import ListDocuments from './ListDocuments';
+
 
 const FormTramiteAdd = ({
   textButton1,
@@ -14,22 +21,19 @@ const FormTramiteAdd = ({
   handleTable,
 }) => {
 
-  const initialEmployeeDates = {
-    nro_document: '',
-    employee_name: '',
-    paternal_surname: '',
-    maternal_surname: '',
-    date_birth: '',
-    phone: '',
-    email: '',
-    address: '',
-  }
 
-  const [employee, setEmployee] = useState(initialEmployeeDates);
+  const [documents, setDocuments] = useState([]);
+  const [typeSource, setTypeSource] = useState('');
+
   const [photo, setPhoto] = useState(null);
   const [temporalPhoto, setTemporalPhoto] = useState(defaultPhoto);
+  const [tiposDocumento, setTiposDocumento] = useState([]);
+
 
   const [modalAddSender, openModalAddSender, closeModalAddSender] = useModal(false);
+  const [modalAddProcedure, openModalAddProcedure, closeModalAddProcedure] = useModal(false);
+  const [modalAddDocument, openModalAddDocument, closeModalAddDocument] = useModal(false);
+  const navigate = useNavigate();
 
 
   const handleChange = (e) => {
@@ -95,7 +99,15 @@ const FormTramiteAdd = ({
     }
 
   }
-  const navigate = useNavigate();
+
+  const loadTiposDocumento = async () => {
+    const response = await fetch('http://localhost:3000/tipodocumento/getlist/');
+    const data = await response.json();
+    setTiposDocumento(data);
+    // console.log(data);
+  }
+
+  useEffect(() => { loadTiposDocumento() }, []);
 
   return (
     // <>
@@ -106,92 +118,75 @@ const FormTramiteAdd = ({
     // </button>
     // </>
     <>
-      <div className="container">
+      <main className="container">
 
+        {/* sender modal */}
         <Modal
           title='Registro de Remitente'
           isOpen={modalAddSender}
           closeModal={closeModalAddSender}
           size='medium'
         >
-          <form className="row g-2 px-3" encType="multipart/form-data" onSubmit={addEmployee}>
-            <div className="col-4">
-              <label htmlFor="nro_document" className="">Nro Documento</label>
-              <input required type="text" className="form-control" name='nro_document' id='nro_document' onChange={handleChange} />
-            </div>
-            <div className="col-8">
-              <label htmlFor="inputEmail4" className="form-label">Nombres</label>
-              <input required type="text" className="form-control" name='employee_name' onChange={handleChange} />
-            </div>
-            <div className="col-6">
-              <label htmlFor="inputEmail4" className="form-label">Apellido Paterno</label>
-              <input required type="text" className="form-control" name='paternal_surname' onChange={handleChange} />
-            </div>
-            <div className="col-6">
-              <label htmlFor="inputEmail4" className="form-label">Apellido Materno</label>
-              <input required type="text" className="form-control" name='maternal_surname' onChange={handleChange} />
-            </div>
-            <div className="col-6">
-              <label htmlFor="inputEmail4" className="form-label">Fecha de Nacimiento</label>
-              <input required type="date" className="form-control" name='date_birth' onChange={handleChange} />
-            </div>
-            <div className="col-6">
-              <label htmlFor="inputEmail4" className="form-label">Teléfono</label>
-              <input required type="text" className="form-control" name='phone' onChange={handleChange} />
-            </div>
-            <div className="col-6">
-              <label htmlFor="inputEmail4" className="form-label">Correo</label>
-              <input required type="email" className="form-control" name='email' onChange={handleChange} />
-            </div>
-            <div className="col-6">
-              <label htmlFor="inputEmail4" className="form-label">Dirección</label>
-              <input required type="text" className="form-control" name='address' onChange={handleChange} />
-            </div>
-            <div className="col-12">
-              <label htmlFor="inputEmail4" className="form-label d-block">En Representación</label>
-              <div className="row">
-                <div className="col-4 text-center">
-                  <input type="radio" name="in_representation" id="toOwnName" value={'A nombre propio'} className="form-check-input" />
-                  <label htmlFor="toOwnName" className="form-check-label">A nombre propio</label>
-                </div>
-                <div className="col-4 text-center">
-                  <input type="radio" name="in_representation" id="toOtherNaturalPerson" value={'A otra persona natural'} className="form-check-input" />
-                  <label htmlFor="toOtherNaturalPerson" className="form-check-label">A otra persona natural</label>
-                </div>
-                <div className="col-4 text-center">
-                  <input type="radio" name="in_representation" id="JuridicPerson" value={'Persona jurídica'} className="form-check-input" />
-                  <label htmlFor="JuridicPerson" className="form-check-label">Persona jurídica</label>
-                </div>
-              </div>
-            </div>
-            <div className="col-6">
-              <label htmlFor="inputEmail4" className="form-label">RUC</label>
-              <input required type="text" className="form-control" name='ruc' onChange={handleChange} />
-            </div>
-            <div className="col-6">
-              <label htmlFor="inputEmail4" className="form-label">Razón Social</label>
-              <input required type="email" className="form-control" name='razon_social' onChange={handleChange} />
-            </div>
-            <div className="col-12 text-end pt-1 ">
-              <button type="submit" className='btn btn-success ms-1'>Registrar</button>
-              <button type="button" className='btn btn-secondary ms-1' onClick={closeModalAddSender}>Cancelar</button>
-            </div>
-          </form>
+          <FormSenderAdd
+            textButton1='Registrar'
+            textButton2='Cancelar'
+            typeButton1='success'
+            typeButton2='secondary'
+            handleButton2={closeModalAddSender}
+            handleTable={''}
+          />
+        </Modal>
+
+        {/* procedure modal */}
+        <Modal
+          title='Registro de Trámite'
+          isOpen={modalAddProcedure}
+          closeModal={closeModalAddProcedure}
+          size='small'
+        >
+          <FormProcedureAdd
+            textButton1='Registrar'
+            textButton2='Cancelar'
+            typeButton1='success'
+            typeButton2='secondary'
+            handleButton2={closeModalAddProcedure}
+            handleTable={''}
+          />
+
+        </Modal>
+
+        {/* document modal */}
+        <Modal
+          title='Registro de Trámite'
+          isOpen={modalAddDocument}
+          closeModal={closeModalAddDocument}
+          size='small'
+        >
+          <FormDocumentAdd
+            textButton1='Registrar'
+            textButton2='Cancelar'
+            typeButton1='success'
+            typeButton2='secondary'
+            handleButton2={closeModalAddDocument}
+            documents={documents}
+            typeSource={typeSource}
+          />
+
         </Modal>
 
         <div className="row p-3">
 
-          <div className='col-12 col-lg-6 bg-white p-0 border border-1'>
+          <section className='col-12 col-lg-6 bg-white p-0 border border-1'>
 
-            <div className="row px-2">
+            <article className="row px-2">
               <h3 className='text-white bg-secondary p-1 fs-5'>Datos de Trámite</h3>
               <div className="col-8 d-flex align-items-center">
                 <strong className='text-primary'>Código de Trámite | </strong>
                 <strong className=''>0000000089</strong>
               </div>
               <div className="col-4 text-end">
-                <button className="btn btn-info" onClick={openModalAddSender}>
-                  <i className="bi bi-plus-lg"></i>
+                <button className="btn btn-info" onClick={openModalAddProcedure}>
+                  <i className="bi bi-pencil"></i>
                 </button>
               </div>
               <div className="col-12">
@@ -217,45 +212,30 @@ const FormTramiteAdd = ({
 
 
 
-            </div>
-            <div className="row px-2">
+            </article>
+
+            <article className="row px-2">
               <h3 className='text-white bg-secondary p-1 fs-5'>Documentos</h3>
-              <div className="col-8 d-flex align-items-center">
-                <strong className='text-primary'>Código de Trámite | </strong>
-                <strong className=''>0000000089</strong>
-              </div>
-              <div className="col-4 text-end">
-                <button className="btn btn-info" onClick={openModalAddSender}>
-                  <i className="bi bi-plus-lg"></i>
-                </button>
-              </div>
-              <div className="col-12">
-                <strong className='text-primary'>Asunto</strong>
-                <p className=''>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Enim providentf</p>
-              </div>
-              <div className="col-4">
-                <strong className='text-primary'>Fecha de Registro</strong>
-                <p>Persona Jurídica</p>
-              </div>
-              <div className="col-4">
-                <strong className='text-primary'>Estado</strong>
-                <p>Persona Jurídica</p>
-              </div>
-              <div className="col-4">
-                <strong className='text-primary'>Área actual</strong>
-                <p>Persona Jurídica</p>
-              </div>
-              <div className="col-12">
-                <strong className='text-primary'>Observación</strong>
-                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aliquam ratione</p>
-              </div>
-            </div>
+              <ListDocuments
+                title='Documentos Adjuntados - Oficina'
+                setTypeSource={setTypeSource}
+                openModalAddDocument={openModalAddDocument}
+                documents={documents}
+                filter='oficina'
+              />
+              <ListDocuments
+                title='Documentos Adjuntados - Remitente'
+                setTypeSource={setTypeSource}
+                openModalAddDocument={openModalAddDocument}
+                documents={documents}
+                filter='remitente'
+              />
+            </article>
+          </section>
 
-          </div>
+          <section className='col-12 col-lg-6 bg-white p-0 border border-1'>
 
-          <div className='col-12 col-lg-6 bg-white p-0 border border-1'>
-
-            <div className="row px-2">
+            <article className="row px-2">
               <h3 className='text-white bg-secondary p-1 fs-5'>Datos de remitente</h3>
               <div className="col-8 input-group mb-3">
                 <input required type="text" className="form-control" name='nro_document' id='nro_document' placeholder='Número de documento' onChange={handleChange} />
@@ -296,12 +276,12 @@ const FormTramiteAdd = ({
                 <strong className='text-primary'>Dirección</strong>
                 <p className='text-break'>Sullana. Bellavista. Madre de Dios 240</p>
               </div>
-            </div>
+            </article>
 
-          </div>
+          </section>
 
         </div>
-      </div>
+      </main>
 
     </>
   )

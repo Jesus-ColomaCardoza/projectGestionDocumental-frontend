@@ -11,12 +11,15 @@ const getDateTime = (datetimestamp) => {
   const minutes = timestamp.getMinutes();
   const seconds = timestamp.getSeconds();
 
+  // we get the am or pm
+  const ampm = hours >= 12 ? 'PM' : 'AM';
+
   // we set a custom format date
   const customDate = `${day.toString().padStart(2, '0')}-${month.toString().padStart(2, '0')}-${year}`;
   const customHour = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 
   //console.log(customDate+' '+customHour);
-  return customDate + ' ' + customHour
+  return customDate + ' ' + customHour + ' ' + ampm
 }
 
 //this method remove the name domain (in this case 'http://localhost:3000' ) to return a substring
