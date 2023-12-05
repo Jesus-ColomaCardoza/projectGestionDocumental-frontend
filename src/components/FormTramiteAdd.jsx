@@ -10,6 +10,7 @@ import FormDocumentAdd from './FormDocumentAdd';
 //images
 import defaultPhoto from '../assets/media/img/defaultPhoto.png'
 import ListDocuments from './ListDocuments';
+import { getDateTime } from '../libraries/application';
 
 
 const FormTramiteAdd = ({
@@ -22,24 +23,46 @@ const FormTramiteAdd = ({
 }) => {
 
 
+  const initialProcedureDates = {
+    id: '0000000000',
+    subject: '------',
+    observation: '------',
+    createdAt: '------',
+    state: '------',// in back end (en tramite/archivado/finalizado)
+    current_area: '------'//
+  }
+  const initialSenderDates = {
+    nro_document: '----------',
+    sender_name: '------',
+    paternal_surname: '------',
+    maternal_surname: '------',
+    date_birth: '------',
+    phone: '------',
+    email: '------',
+    address: '------',
+    representation: '------',
+    ruc: '------',
+    business_name: '------'
+  }
   const [documents, setDocuments] = useState([]);
   const [typeSource, setTypeSource] = useState('');
+  const [procedure, setProcedure] = useState(initialProcedureDates)
+  const [sender, setSender] = useState(initialSenderDates)
+
 
   const [photo, setPhoto] = useState(null);
   const [temporalPhoto, setTemporalPhoto] = useState(defaultPhoto);
-  const [tiposDocumento, setTiposDocumento] = useState([]);
 
 
   const [modalAddSender, openModalAddSender, closeModalAddSender] = useModal(false);
   const [modalAddProcedure, openModalAddProcedure, closeModalAddProcedure] = useModal(false);
   const [modalAddDocument, openModalAddDocument, closeModalAddDocument] = useModal(false);
+  
   const navigate = useNavigate();
 
 
   const handleChange = (e) => {
     setEmployee({ ...employee, [e.target.name]: e.target.value });
-    // formData.append(e.target.name,e.target.value)
-
   };
 
   const handleSelectedFile = (e) => {
@@ -100,24 +123,11 @@ const FormTramiteAdd = ({
 
   }
 
-  const loadTiposDocumento = async () => {
-    const response = await fetch('http://localhost:3000/tipodocumento/getlist/');
-    const data = await response.json();
-    setTiposDocumento(data);
-    // console.log(data);
-  }
-
-  useEffect(() => { loadTiposDocumento() }, []);
-
-  return (
-    // <>
-    // <p>add tramite</p>
-
-    // <button onClick={()=>{navigate('../lista')}}>
-    //   previos
-    // </button>
-    // </>
+  return (  
     <>
+    <button onClick={()=>{navigate('../lista')}}>
+      previos
+    </button>
       <main className="container">
 
         {/* sender modal */}
@@ -133,7 +143,7 @@ const FormTramiteAdd = ({
             typeButton1='success'
             typeButton2='secondary'
             handleButton2={closeModalAddSender}
-            handleTable={''}
+            setData={setSender}
           />
         </Modal>
 
@@ -150,7 +160,7 @@ const FormTramiteAdd = ({
             typeButton1='success'
             typeButton2='secondary'
             handleButton2={closeModalAddProcedure}
-            handleTable={''}
+            setData={setProcedure}
           />
 
         </Modal>
@@ -182,7 +192,7 @@ const FormTramiteAdd = ({
               <h3 className='text-white bg-secondary p-1 fs-5'>Datos de Trámite</h3>
               <div className="col-8 d-flex align-items-center">
                 <strong className='text-primary'>Código de Trámite | </strong>
-                <strong className=''>0000000089</strong>
+                <strong className=''>{procedure.id}</strong>
               </div>
               <div className="col-4 text-end">
                 <button className="btn btn-info" onClick={openModalAddProcedure}>
@@ -191,27 +201,26 @@ const FormTramiteAdd = ({
               </div>
               <div className="col-12">
                 <strong className='text-primary'>Asunto</strong>
-                <p className=''>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Enim providentf</p>
+                <p className=''>{procedure.subject}</p>
               </div>
               <div className="col-4">
                 <strong className='text-primary'>Fecha de Registro</strong>
-                <p>Persona Jurídica</p>
+                <p>
+                  <small><i>{getDateTime(procedure.createdAt)}</i></small>
+                </p>
               </div>
               <div className="col-4">
                 <strong className='text-primary'>Estado</strong>
-                <p>Persona Jurídica</p>
+                <p>{procedure.state}</p>
               </div>
               <div className="col-4">
                 <strong className='text-primary'>Área actual</strong>
-                <p>Persona Jurídica</p>
+                <p>{procedure.current_area}</p>
               </div>
               <div className="col-12">
                 <strong className='text-primary'>Observación</strong>
-                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aliquam ratione</p>
+                <p>{procedure.observation}</p>
               </div>
-
-
-
             </article>
 
             <article className="row px-2">
@@ -249,32 +258,32 @@ const FormTramiteAdd = ({
                 </button>
               </div>
               <div className="col-4">
-                <strong className='text-primary'>Tipo de persona</strong>
-                <p className=''>Persona Jurídica</p>
+                <strong className='text-primary'>Representación</strong>
+                <p className=''>{sender.representation}</p>
               </div>
               <div className="col-4">
                 <strong className='text-primary'>RUC</strong>
-                <p>Persona Jurídica</p>
+                <p>{sender.ruc}</p>
               </div>
               <div className="col-4">
                 <strong className='text-primary'>Razón Social</strong>
-                <p>Persona Jurídica</p>
+                <p>{sender.business_name}</p>
               </div>
               <div className="col-12">
                 <strong className='text-primary'>Nro documento | Nombres y apellidos</strong>
-                <p>65786514 | Helllary Jesus Coloma Cardoza</p>
+                <p>{sender.nro_document+' | '+sender.sender_name+' '+sender.paternal_surname+' '+sender.maternal_surname}</p>
               </div>
               <div className="col-4">
                 <strong className='text-primary'>Teléfono</strong>
-                <p>+5198765432</p>
+                <p>{sender.phone}</p>
               </div>
               <div className="col-8">
                 <strong className='text-primary'>Correo</strong>
-                <p className='text-break'>colomacardoza@gmail.com</p>
+                <p className='text-break'>{sender.email}</p>
               </div>
               <div className="col-12">
                 <strong className='text-primary'>Dirección</strong>
-                <p className='text-break'>Sullana. Bellavista. Madre de Dios 240</p>
+                <p className='text-break'>{sender.address}</p>
               </div>
             </article>
 
@@ -282,9 +291,7 @@ const FormTramiteAdd = ({
 
         </div>
       </main>
-
     </>
   )
 }
-
 export default FormTramiteAdd

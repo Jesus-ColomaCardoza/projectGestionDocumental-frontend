@@ -1,8 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { alertMessage } from '../libraries/alertMessage';
-import defaultPhoto from '../assets/media/img/defaultPhoto.png'
-
-
 
 const FormProcedureAdd = ({
   textButton1,
@@ -10,82 +7,45 @@ const FormProcedureAdd = ({
   typeButton1,
   typeButton2,
   handleButton2,
-  handleTable
+  setData
 }) => {
 
-  const initialEmployeeDates = {
-    nro_document: '',
-    employee_name: '',
-    paternal_surname: '',
-    maternal_surname: '',
-    date_birth: '',
-    phone: '',
-    email: '',
-    address: '',
+  const initialProcedureDates = {
+    id: '',
+    subject: '',
+    observation: '',
+    createdAt: '',
+    state: '',// in back end (en tramite/archivado/finalizado)
+    current_area: ''//
   }
 
-  const [employee, setEmployee] = useState(initialEmployeeDates);
-  const [photo, setPhoto] = useState(null);
-  const [temporalPhoto, setTemporalPhoto] = useState(defaultPhoto);
+  const [procedure, setProcedure] = useState(initialProcedureDates)
+
 
 
   const handleChange = (e) => {
-    setEmployee({ ...employee, [e.target.name]: e.target.value });
-    // formData.append(e.target.name,e.target.value)
+    setProcedure({ ...procedure, [e.target.name]: e.target.value });
 
   };
 
-  const handleSelectedFile = (e) => {
-    if (e.target.files[0]) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setTemporalPhoto(e.target.result);
-      }
-      reader.readAsDataURL(e.target.files[0]);
-      setPhoto(e.target.files[0]);
-      // console.log(e.target.files[0]);
-    } else {
-      setTemporalPhoto(defaultPhoto);
-      setPhoto(null);
-    }
-  }
-
-  const addEmployee = async (e) => {
-    //falta implementar : cuando un usuario no se registro correctamente no se valida, se debe mostrar error 
+  const addProcedure = async (e) => {
     e.preventDefault();
 
     try {
-      if (photo == null && temporalPhoto == defaultPhoto) {
-        throw new Error('Seleccione foto de perfil');
-      }
 
-      const formData = new FormData();
-      const arrayEntries = Object.entries(employee);
+      //we add the current date
+      procedure.createdAt = Date.now();
+      //we add the initial state
+      procedure.state = 'en tramite';
 
-      formData.append('profile_photo', photo);
-      arrayEntries.forEach(element => {
-        formData.append(element[0], element[1]);
-      });
+      setData(procedure)
 
-      const response = await fetch('http://localhost:3000/empleado/create/', {
-        method: 'POST',
-        body: formData,
-      })
-      const data = await response.json();
-      console.log(data);
-      //we reset the form      
-      e.target.reset();
-      //we reset the photo and temporalPhoto
-      setPhoto(null)
-      setTemporalPhoto(defaultPhoto);
       //we show the confirmed modal  
       alertMessage('Registro exitoso!', 'El empleado has sido registrado', 'success', 'OK', '#28A745');
+
       //we close the modal window
       handleButton2();
-      //cambiar el estado de la tabla user
-      handleTable();
-      //reset el object employeeDates
-      setEmployee(initialEmployeeDates);
+
     } catch (error) {
       alertMessage('Error!', error, 'error', 'OK', '#d33');
       console.log(error);
@@ -95,18 +55,18 @@ const FormProcedureAdd = ({
 
   return (
     <>
-      <form className="row g-2 px-3" encType="multipart/form-data" onSubmit={addEmployee}>
+      <form className="row g-2 px-3" encType="multipart/form-data" onSubmit={addProcedure}>
         <div className="col-6">
           <label htmlFor="cod_procedure" className="">Código de Trámite</label>
-          <input required type="text" className="form-control" name='id' id='cod_procedure' onChange={handleChange} />
+          <input required type="text" className="form-control" name='id' id='cod_procedure' onChange={handleChange} value={procedure.id} />
         </div>
         <div className="col-12">
           <label htmlFor="inputEmail4" className="form-label">Asunto</label>
-          <input required type="text" className="form-control" name='subject' onChange={handleChange} />
+          <input required type="text" className="form-control" name='subject' onChange={handleChange} value={procedure.subject} />
         </div>
         <div className="col-12">
           <label htmlFor="inputEmail4" className="form-label">Observación</label>
-          <textarea className="form-control" name='observation' onChange={handleChange} rows="3"></textarea>
+          <textarea className="form-control" name='observation' onChange={handleChange} rows="3" value={procedure.observation}></textarea>
         </div>
         <div className="col-12 text-end pt-1 ">
           <button type="submit" className={`btn btn-${typeButton1} ms-1`}>{textButton1}</button>

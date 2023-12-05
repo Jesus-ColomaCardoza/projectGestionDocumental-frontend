@@ -13,7 +13,7 @@ const ListDocuments = ({
 
   return (
     <>
-      <div className='d-flex justify-content-between align-items-center border-bottom border-secondary pb-1'>
+      <div className='d-flex justify-content-between align-items-center border-bottom border-secondary py-1'>
         <h4 className='m-0 fs-6 d-inline align-middle'>{title}</h4>
         <button className="btn btn-info py-1" onClick={() => {
           setTypeSource(filter)
@@ -32,7 +32,7 @@ const ListDocuments = ({
                     <img src={pdf} alt="image pdf" />
                   </div>
                   <div className="col-10">
-                    <p className='m-0'>{index + 1 + '.  ' + document.subject + ' ' + document.type_source}</p>
+                    <p className='m-0'>{index + 1 + '.  ' + document.subject + '-' + document.type_source+'-'+document.state}</p>
                     <small className='m-0'>Fecha de registro <i>{getDateTime(document.createdAt)}</i></small>
                   </div>
                   <div className="dropdown col-1 d-flex align-items-center">
