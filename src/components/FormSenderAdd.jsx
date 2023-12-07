@@ -97,15 +97,15 @@ const FormSenderAdd = ({
           <label htmlFor="inputEmail4" className="form-label d-block">En Representación</label>
           <div className="row">
             <div className="col-4 text-center">
-              <input type="radio" name="representation" id="toOwnName" value={'A nombre propio'} className="form-check-input" onChange={handleChangeRadioButton} />
+              <input required type="radio" name="representation" id="toOwnName" value={'A nombre propio'} className="form-check-input" onChange={handleChangeRadioButton} />
               <label htmlFor="toOwnName" className="form-check-label">A nombre propio</label>
             </div>
             <div className="col-4 text-center">
-              <input type="radio" name="representation" id="toOtherNaturalPerson" value={'A otra persona natural'} className="form-check-input" onChange={handleChangeRadioButton} />
+              <input required type="radio" name="representation" id="toOtherNaturalPerson" value={'A otra persona natural'} className="form-check-input" onChange={handleChangeRadioButton} />
               <label htmlFor="toOtherNaturalPerson" className="form-check-label">A otra persona natural</label>
             </div>
             <div className="col-4 text-center">
-              <input type="radio" name="representation" id="JuridicPerson" value={'Persona jurídica'} className="form-check-input" onChange={handleChangeRadioButton} />
+              <input required type="radio" name="representation" id="JuridicPerson" value={'Persona jurídica'} className="form-check-input" onChange={handleChangeRadioButton} />
               <label htmlFor="JuridicPerson" className="form-check-label">Persona jurídica</label>
             </div>
           </div>
@@ -113,11 +113,11 @@ const FormSenderAdd = ({
         <div className='row d-none' id='legalEntity'>
           <div className="col-6">
             <label htmlFor="inputEmail4" className="form-label">RUC</label>
-            <input required type="text" className="form-control" name='ruc' onChange={handleChange} />
+            <input type="text" className="form-control" name='ruc' onChange={handleChange} />
           </div>
           <div className="col-6">
             <label htmlFor="inputEmail4" className="form-label">Razón Social</label>
-            <input required type="text" className="form-control" name='business_name' onChange={handleChange} />
+            <input type="text" className="form-control" name='business_name' onChange={handleChange} />
           </div>
         </div>
         <div className="col-12 text-end pt-1 ">

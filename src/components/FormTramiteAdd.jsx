@@ -27,7 +27,7 @@ const FormTramiteAdd = ({
     id: '0000000000',
     subject: '------',
     observation: '------',
-    createdAt: '------',
+    createdAt: '',
     state: '------',// in back end (en tramite/archivado/finalizado)
     current_area: '------'//
   }
@@ -36,7 +36,7 @@ const FormTramiteAdd = ({
     sender_name: '------',
     paternal_surname: '------',
     maternal_surname: '------',
-    date_birth: '------',
+    date_birth: '',
     phone: '------',
     email: '------',
     address: '------',
@@ -45,9 +45,9 @@ const FormTramiteAdd = ({
     business_name: '------'
   }
   const [documents, setDocuments] = useState([]);
-  const [typeSource, setTypeSource] = useState('');
   const [procedure, setProcedure] = useState(initialProcedureDates)
   const [sender, setSender] = useState(initialSenderDates)
+  const [typeSource, setTypeSource] = useState('');
 
 
   const [photo, setPhoto] = useState(null);
@@ -81,7 +81,7 @@ const FormTramiteAdd = ({
   }
 
   const addEmployee = async (e) => {
-    //falta implementar : cuando un usuario no se registro correctamente no se valida, se debe mostrar error 
+
     e.preventDefault();
 
     try {
@@ -230,6 +230,7 @@ const FormTramiteAdd = ({
                 setTypeSource={setTypeSource}
                 openModalAddDocument={openModalAddDocument}
                 documents={documents}
+                setDocuments={setDocuments}
                 filter='oficina'
               />
               <ListDocuments
@@ -237,6 +238,7 @@ const FormTramiteAdd = ({
                 setTypeSource={setTypeSource}
                 openModalAddDocument={openModalAddDocument}
                 documents={documents}
+                setDocuments={setDocuments}
                 filter='remitente'
               />
             </article>

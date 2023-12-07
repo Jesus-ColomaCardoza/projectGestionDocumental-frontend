@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { alertMessage } from '../libraries/alertMessage';
-import defaultPhoto from '../assets/media/img/defaultPhoto.png'
 
 const FormDocumentAdd = ({
   textButton1,
@@ -15,7 +14,7 @@ const FormDocumentAdd = ({
   const initialDocumentDates = {
     id: '',
     subject: '',
-    file_url: '',//
+    file: '',//
     state: '', // in back end (firmado/sin firmar)
     type_document: '',
     type_source: '',
@@ -26,38 +25,23 @@ const FormDocumentAdd = ({
   const [tiposDocumento, setTiposDocumento] = useState([]);
   const [document, setDocument] = useState(initialDocumentDates)
 
-  const [photo, setPhoto] = useState(null);
-  const [temporalPhoto, setTemporalPhoto] = useState(defaultPhoto);
+  const [file, setFile] = useState(null);//it save the file with all properties
 
 
   const handleChange = (e) => {
     setDocument({ ...document, [e.target.name]: e.target.value });
     console.log(document);
-    // formData.append(e.target.name,e.target.value)
   };
 
   const handleSelectedFile = (e) => {
     if (e.target.files[0]) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setTemporalPhoto(e.target.result);
-      }
-      reader.readAsDataURL(e.target.files[0]);
-      setPhoto(e.target.files[0]);
-      // console.log(e.target.files[0]);
-    } else {
-      setTemporalPhoto(defaultPhoto);
-      setPhoto(null);
-    }
+      setFile(e.target.files[0]);
+    } 
   }
 
   const addDocument = async (e) => {
 
     e.preventDefault();
-
-    // //we add the current date
-    // document.createdAt=new Date();
-    // alert(document.createdAt)
 
     try {
 
@@ -65,6 +49,7 @@ const FormDocumentAdd = ({
       document.createdAt = Date.now();
       document.type_source = typeSource;
       document.state = 'sin firmar';
+      document.file = file;
 
       documents.push(document);
 
@@ -118,12 +103,10 @@ const FormDocumentAdd = ({
           <label htmlFor="subject" className="form-label">Asunto</label>
           <textarea required className="form-control" name='subject' onChange={handleChange} rows="2"></textarea>
         </div>
-
         <div className="col-12 col-md-12 ">
           <label htmlFor="document" className="form-label">Selecionar documento</label>
-          <input single='true' type="file" className="form-control" name='document' id='document' accept='.pdf' onChange={handleSelectedFile} />
+          <input required single='true' type="file" className="form-control" name='document' id='document' accept='.pdf' onChange={handleSelectedFile} />
         </div>
-
         <div className="col-12 text-end pt-1 ">
           <button type="submit" className={`btn btn-${typeButton1} ms-1`}>{textButton1}</button>
           <button type="button" className={`btn btn-${typeButton2} ms-1`} onClick={handleButton2}>{textButton2}</button>
