@@ -14,12 +14,12 @@ const FormDocumentAdd = ({
   const initialDocumentDates = {
     id: '',
     subject: '',
-    file: '',//
-    state: '', // in back end (firmado/sin firmar)
-    type_document: '',
-    type_source: '',
-    createdAt: '',
-    id_procedure: ''//
+    date_registration: '',
+    source: '',
+    file: '',// url
+    state: '',
+    tipoDocumento_id: '',
+    procedure_id: '',//
   }
 
   const [tiposDocumento, setTiposDocumento] = useState([]);
@@ -46,8 +46,8 @@ const FormDocumentAdd = ({
     try {
 
       //we add the current date
-      document.createdAt = Date.now();
-      document.type_source = typeSource;
+      document.date_registration = Date.now();
+      document.source = typeSource;
       document.state = 'sin firmar';
       document.file = file;
 
@@ -86,7 +86,7 @@ const FormDocumentAdd = ({
       <form className="row g-2 px-3" encType="multipart/form-data" onSubmit={addDocument}>
         <div className="col-12 col-md-7">
           <label className="form-label">Tipo de Documento</label>
-          <select className="form-select" name='type_document' onChange={handleChange} defaultValue={-1}>
+          <select className="form-select" name='tipoDocumento_id' onChange={handleChange} defaultValue={-1}>
             <option disabled key={-1} value={-1}>Seleccionar tipo de documento</option>
             {
               tiposDocumento.map((td) => {

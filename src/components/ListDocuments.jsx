@@ -14,12 +14,12 @@ const ListDocuments = ({
   filter
 }) => {
 
-  const data=documents.filter((document) => document.type_source == filter)
+  const data = documents.filter((document) => document.type_source == filter)
 
   const [viewFile, setviewFile] = useState(null);
 
   const [modalViewPdf, openViewPdf, closeViewPdf] = useModal(false);
-  
+
 
   const handleViewFile = (index) => { //correguir con id y data->documents
     if (data[index].file) {
@@ -65,51 +65,51 @@ const ListDocuments = ({
       <ul className="list-group list-group-flush">
         {
           data.map((document, index) => {
-              return (
-                <li className="list-group-item py-0" key={document.id}>
-                  <div className="row">
-                    <div className='col-1 p-0 d-flex align-items-center'>
-                      <img src={pdf} alt="image pdf" />
-                    </div>
-                    <div className="col-10">
-                      <p className='m-0'>{index + 1 + '.  ' + document.subject + '-' + document.type_source + '-' + document.state}</p>
-                      <small className='m-0'>Fecha de registro <i>{getDateTime(document.createdAt)}</i></small>
-                    </div>
-                    <div className="dropdown col-1 d-flex align-items-center">
-                      <button className="btn border-0 py-1" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i className="bi bi-three-dots-vertical"></i>
-                      </button>
-                      <ul className="dropdown-menu">
-                        <li>
-                          <button className="dropdown-item" onClick={() => {
-                            handleViewFile(index);
-                            openViewPdf();
-                          }}>
-                            <i className="bi bi-eye-fill me-2 text-secondary"></i>
-                            Ver documento
-                          </button>
-                        </li>
-                        <li>
-                          <button className="dropdown-item" href="#">
-                            <i className="bi bi-pen-fill me-2 text-primary"></i>
-                            Firmar
-                          </button>
-                        </li>
-                        <li>
-                          <button className="dropdown-item" onClick={() => {
-                            alert(document.id)
-                            deleteDocument(document.id);
-                          }}>
-                            <i className="bi bi-dash-circle-fill me-2 text-danger"></i>
-                            Eliminar
-                          </button>
-                        </li>
-                      </ul>
-                    </div>
+            return (
+              <li className="list-group-item py-0" key={document.id}>
+                <div className="row">
+                  <div className='col-1 p-0 d-flex align-items-center'>
+                    <img src={pdf} alt="image pdf" />
                   </div>
-                </li>
-              );
-              
+                  <div className="col-10">
+                    <p className='m-0'>{index + 1 + '.  ' + document.subject + '-' + document.type_source + '-' + document.state}</p>
+                    <small className='m-0'>Fecha de registro <i>{getDateTime(document.createdAt)}</i></small>
+                  </div>
+                  <div className="dropdown col-1 d-flex align-items-center">
+                    <button className="btn border-0 py-1" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      <i className="bi bi-three-dots-vertical"></i>
+                    </button>
+                    <ul className="dropdown-menu">
+                      <li>
+                        <button className="dropdown-item" onClick={() => {
+                          handleViewFile(index);
+                          openViewPdf();
+                        }}>
+                          <i className="bi bi-eye-fill me-2 text-secondary"></i>
+                          Ver documento
+                        </button>
+                      </li>
+                      <li>
+                        <button className="dropdown-item" href="#">
+                          <i className="bi bi-pen-fill me-2 text-primary"></i>
+                          Firmar
+                        </button>
+                      </li>
+                      <li>
+                        <button className="dropdown-item" onClick={() => {
+                          alert(document.id)
+                          deleteDocument(document.id);
+                        }}>
+                          <i className="bi bi-dash-circle-fill me-2 text-danger"></i>
+                          Eliminar
+                        </button>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </li>
+            );
+
           })
         }
       </ul>

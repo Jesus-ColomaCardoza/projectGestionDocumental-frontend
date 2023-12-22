@@ -47,6 +47,7 @@ const FormTramiteAdd = ({
   const [documents, setDocuments] = useState([]);
   const [procedure, setProcedure] = useState(initialProcedureDates)
   const [sender, setSender] = useState(initialSenderDates)
+  //this state is to save the source document that it can be sender/office
   const [typeSource, setTypeSource] = useState('');
 
 

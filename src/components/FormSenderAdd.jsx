@@ -32,6 +32,7 @@ const FormSenderAdd = ({
   };
 
   const handleChangeRadioButton = (e) => {
+    setSender({ ...sender, [e.target.name]: e.target.value });
     const legalEntity = document.getElementById('legalEntity');
     e.target.value == 'Persona jurídica' ? 
     legalEntity.classList.remove('d-none') :
@@ -45,6 +46,7 @@ const FormSenderAdd = ({
     try {
 
       setData(sender)
+      //console.log(sender);
 
       //we show the confirmed modal  
       alertMessage('Registro exitoso!', 'El empleado has sido registrado', 'success', 'OK', '#28A745');

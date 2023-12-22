@@ -4,14 +4,13 @@ import logo from '../assets/media/img/AdminLTELogo.png'
 
 function MainAside() {
 
-    //update this method:
-    const bb=document.querySelector('.sidebar-mini');
-    const ff=document.getElementById('sidebar-overlay');
-    ff.addEventListener('click',()=>{
-      bb.classList.replace('sidebar-open','sidebar-closed')
-      bb.classList.add('sidebar-collapse')
-    })
-    
+  //update this method:
+  const sidebarMini = document.querySelector('.sidebar-mini');
+  const sidebarOverlay = document.getElementById('sidebar-overlay');
+  sidebarOverlay.addEventListener('click', () => {
+    sidebarMini.classList.replace('sidebar-open', 'sidebar-closed')
+    sidebarMini.classList.add('sidebar-collapse')
+  })
   return (
 
     <aside className="main-sidebar sidebar-dark-primary custom-fixed">
@@ -27,9 +26,7 @@ function MainAside() {
         <div className="user-panel mt-3 pb-3 mb-3 d-flex">
           <div className="image d-flex">
             <img src={logo} className="img-circle elevation-2" alt="User Image" />
-            <div className="info">
-              <a href="#" className="">Hellary Jesus Coloma Cardoza</a>
-            </div>
+            <a href="#" id="userName" className="info">Hellary Jesus Coloma Cardoza</a>
           </div>
 
         </div>
