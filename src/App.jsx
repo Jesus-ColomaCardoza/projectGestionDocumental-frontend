@@ -1,4 +1,4 @@
-import { BrowserRouter,Routes,Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Login from './pages/Login'
 import Home from './pages/Home'
 import Tramite from './pages/Tramite'
@@ -8,28 +8,34 @@ import Area from './pages/Area'
 import TipoDocumento from './pages/TipoDocumento'
 import FormTramiteAdd from './components/FormTramiteAdd'
 import './App.css'
+import { UserProvider } from './contexts/UserContext'
+import PrivateRoute from './components/PrivateRoute'
 
 function App() {
 
   return (
     <>
-      <BrowserRouter>
-        <Routes>
-          {/* <Route exact path='/' element={<Login />}></Route> */}
-          <Route exact path='/' element={<Home />}></Route>
-          <Route exact path='/home' element={<Home />}>
-            <Route exact path='/home/tramite'>
-              <Route exact path='/home/tramite/lista' element={<Tramite />}></Route>
-              <Route exact path='/home/tramite/registro' element={<FormTramiteAdd />}></Route>
+      <UserProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route exact path='/' element={<Login />}></Route>
+            
+            <Route exact path='/' element={<PrivateRoute />}>
+              <Route exact path='/home' element={<Home />}>
+                <Route exact path='/home/tramite'>
+                  <Route exact path='/home/tramite/lista' element={<Tramite />}></Route>
+                  <Route exact path='/home/tramite/registro' element={<FormTramiteAdd />}></Route>
+                </Route>
+                <Route exact path='/home/usuario' element={<Usuario />}></Route>
+                <Route exact path='/home/empleado' element={<Empleado />}></Route>
+                <Route exact path='/home/area' element={<Area />}></Route>
+                <Route exact path='/home/tipodocumento' element={<TipoDocumento />}></Route>
+              </Route>
             </Route>
-            <Route exact path='/home/usuario' element={<Usuario />}></Route>
-            <Route exact path='/home/empleado' element={<Empleado />}></Route>
-            <Route exact path='/home/area' element={<Area />}></Route>
-            <Route exact path='/home/tipodocumento' element={<TipoDocumento />}></Route>
-          </Route>
-        </Routes>
-      </BrowserRouter>
 
+          </Routes>
+        </BrowserRouter>
+      </UserProvider>
     </>
   )
 }

@@ -1,6 +1,9 @@
+import { useEffect } from 'react';
 import logo from '../assets/media/img/AdminLTELogo.png'
+import '../stylesheets/Preloader.css'
 
 function Preloader() {
+
     return (
 
         <div className="preloader flex-column justify-content-center align-items-center">

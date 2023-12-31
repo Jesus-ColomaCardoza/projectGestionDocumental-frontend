@@ -14,7 +14,7 @@ const ListDocuments = ({
   filter
 }) => {
 
-  const data = documents.filter((document) => document.type_source == filter)
+  const data = documents.filter((document) => document.source == filter)
 
   const [viewFile, setviewFile] = useState(null);
 
@@ -72,8 +72,8 @@ const ListDocuments = ({
                     <img src={pdf} alt="image pdf" />
                   </div>
                   <div className="col-10">
-                    <p className='m-0'>{index + 1 + '.  ' + document.subject + '-' + document.type_source + '-' + document.state}</p>
-                    <small className='m-0'>Fecha de registro <i>{getDateTime(document.createdAt)}</i></small>
+                    <p className='m-0'>{index + 1 + '.  ' + document.subject + '-' + document.source + '-' + document.state}</p>
+                    <small className='m-0'>Fecha de registro <i>{getDateTime(document.date_registration)}</i></small>
                   </div>
                   <div className="dropdown col-1 d-flex align-items-center">
                     <button className="btn border-0 py-1" type="button" data-bs-toggle="dropdown" aria-expanded="false">

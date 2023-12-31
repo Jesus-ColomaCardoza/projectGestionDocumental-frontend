@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
 import logo from '../assets/media/img/AdminLTELogo.png'
+import { useContext } from 'react';
+import UserContext from '../contexts/UserContext';
 
 
 function MainAside() {
@@ -11,6 +13,9 @@ function MainAside() {
     sidebarMini.classList.replace('sidebar-open', 'sidebar-closed')
     sidebarMini.classList.add('sidebar-collapse')
   })
+
+  const {user}=useContext(UserContext)
+
   return (
 
     <aside className="main-sidebar sidebar-dark-primary custom-fixed">
@@ -25,8 +30,12 @@ function MainAside() {
         {/* replace user-panel class so that name can auto resize */}
         <div className="user-panel mt-3 pb-3 mb-3 d-flex">
           <div className="image d-flex">
-            <img src={logo} className="img-circle elevation-2" alt="User Image" />
-            <a href="#" id="userName" className="info">Hellary Jesus Coloma Cardoza</a>
+            <img src={user.Empleado.profile_photo} className="img-circle elevation-2" alt="User Image" />
+            <a href="#" id="userName" className="info">{
+            user.Empleado.employee_name+' '+
+            user.Empleado.paternal_surname+' '+
+            user.Empleado.maternal_surname
+            }</a>
           </div>
 
         </div>
