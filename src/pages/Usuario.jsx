@@ -185,7 +185,7 @@ const Usuario = () => {
                       <th scope="row">{index + 1}</th>
                       <td>{user.user_name}</td>
                       <td>{user.Area.area_name}</td>
-                      <td>{user.role}</td>
+                      <td>{user.user_type}</td>
                       <td className='text-break'>{
                         user.Empleado.employee_name + ' ' +
                         user.Empleado.paternal_surname + ' ' +

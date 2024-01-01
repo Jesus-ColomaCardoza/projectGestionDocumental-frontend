@@ -1,10 +1,10 @@
 import { useContext, useEffect, useState } from 'react';
 import '../templates/AdminLTE-3.2.0/plugins/icheck-bootstrap/icheck-bootstrap.min.css'
 import { alertMessage } from '../libraries/alertMessage';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import UserContext from '../contexts/UserContext';
 
-const Login=()=> {
+const Login = () => {
 
   const userData = {
     user_name: '',
@@ -12,10 +12,24 @@ const Login=()=> {
   }
 
   const [user, setUser] = useState(userData);
+  const [check, setCheck] = useState(false);
+
   const { handleUser, isAuth, handleAuth } = useContext(UserContext)
+
+  const userPassword = document.getElementById('user_password');
 
   const handleChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
+  };
+
+  const handleChecked = (e) => {
+    if (e.target.checked) {
+      setCheck(!check);
+      localStorage.setItem('user', JSON.stringify(user));
+    } else {
+      setCheck(!check);
+      localStorage.removeItem('user');
+    }
   };
 
   const login = async (e) => {
@@ -45,7 +59,7 @@ const Login=()=> {
             //we update the autentication of user to true
             handleAuth(true);
             //we save the values in the localstorage
-            saveDataLocalStorage(data, true);
+            saveDataSessionStorage(data, true);
           }
         });
 
@@ -57,11 +71,34 @@ const Login=()=> {
     }
   }
 
-  const saveDataLocalStorage = (data, value) => {
+  const saveDataSessionStorage = (data, value) => {
     sessionStorage.setItem('user', JSON.stringify(data))
     sessionStorage.setItem('auth', value)
+    // sessionStorage.clear();
+  }
+
+  const loadDataLocalStorage = () => {
+    let user = localStorage.getItem('user');
+    if (user) {
+      setUser(JSON.parse(user));
+      setCheck(true);
+    }
     // localStorage.clear();
   }
+
+  const seePassword = (e) => {
+    if (e.target) {
+      userPassword.setAttribute('type', 'text')
+    }
+  }
+
+  const dontSeePassword = (e) => {
+    if (e.target) {
+      userPassword.setAttribute('type', 'password')
+    }
+  }
+
+  useEffect(() => { loadDataLocalStorage() }, []);
 
   return (
     <>
@@ -69,12 +106,12 @@ const Login=()=> {
         !sessionStorage.getItem('auth') && !isAuth ? (
           //when we enter to the system first time or sign out
           // console.log('enter a 1'),
-          <main className="hold-transition login-page">
+          <main className="hold-transition login-page login__container">
             {/* <Preloader /> */}
 
             <section className="login-box">
               <header className="login-logo">
-                <b>Admin</b>LTE
+                Sistema <b>Gestión</b> Documental
               </header>
 
               {/* /.login-logo  */}
@@ -84,25 +121,25 @@ const Login=()=> {
 
                   <form method="post" onSubmit={login}>
                     <div className="input-group mb-3">
-                      <input type="text" className="form-control" placeholder="Nombre de usuario" name='user_name' onChange={handleChange} />
+                      <input type="text" className="form-control" placeholder="Nombre de usuario" name='user_name' id='user_name' onChange={handleChange} value={user.user_name} />
                       <div className="input-group-append">
                         <div className="input-group-text">
-                          <span className="fas fa-envelope"></span>
+                          <span className="fas fa-user"></span>
                         </div>
                       </div>
                     </div>
                     <div className="input-group mb-3">
-                      <input type="password" className="form-control" placeholder="Contraseña" name='user_password' onChange={handleChange} />
+                      <input type="password" className="form-control" placeholder="Contraseña" name='user_password' id='user_password' onChange={handleChange} value={user.user_password} />
                       <div className="input-group-append">
                         <div className="input-group-text">
-                          <span className="fas fa-lock"></span>
+                          <span className="fas fa-eye" onMouseDown={seePassword} onMouseUp={dontSeePassword}></span>
                         </div>
                       </div>
                     </div>
                     <div className="row">
                       <div className="col-8">
                         <div className="icheck-primary">
-                          <input type="checkbox" id="remember" />
+                          <input type="checkbox" id="remember" onChange={handleChecked} checked={check} />
                           <label htmlFor="remember">
                             Remember Me
                           </label>

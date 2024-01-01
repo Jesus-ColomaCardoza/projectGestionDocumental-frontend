@@ -18,7 +18,7 @@ const FormUserUpdate = ({
     user_password: '',
     empleado_id: '',
     area_id: '',
-    role: ''
+    user_type: ''
   }
   const [user, setUser] = useState(initialUserDates);
 
@@ -95,14 +95,14 @@ const FormUserUpdate = ({
         </div>
         <div className="col-md-6">
           <label className="form-label">Rol</label>
-          <select className="form-select" name='role' onChange={handleChange} value={user.role}>
+          <select className="form-select" name='user_type' onChange={handleChange} value={user.user_type}>
             <option disabled key={-1} value={-1}>Seleccionar rol</option>
             <option key={0} value={'admin'}>admin</option>
             <option key={1} value={'user'}>user</option>
             {/* <option  key={-1}>Seleccionar rol</option>
         {
-          roles.map((role) => { 
-            return <option key={role.id} >{role.role_name}</option>
+          user_types.map((user_type) => { 
+            return <option key={user_type.id} >{user_type.user_type_name}</option>
           })
         } */}
           </select>
