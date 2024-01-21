@@ -1,5 +1,6 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState,useEffect, useContext } from 'react';
 import { alertMessage } from '../libraries/alertMessage';
+import UserContext from '../contexts/UserContext';
 
 const FormProcedureAdd = ({
   textButton1,
@@ -20,8 +21,7 @@ const FormProcedureAdd = ({
   }
 
   const [procedure, setProcedure] = useState(initialProcedureDates)
-
-
+  const {user} = useContext(UserContext);
 
   const handleChange = (e) => {
     setProcedure({ ...procedure, [e.target.name]: e.target.value });
@@ -37,6 +37,8 @@ const FormProcedureAdd = ({
       procedure.createdAt = Date.now();
       //we add the initial state
       procedure.state = 'en tramite';
+      //we add the current area
+      procedure.current_area = user.Area.area_name;
 
       setData(procedure)
 

@@ -58,7 +58,7 @@ const FormTramiteAdd = ({
   const [modalAddSender, openModalAddSender, closeModalAddSender] = useModal(false);
   const [modalAddProcedure, openModalAddProcedure, closeModalAddProcedure] = useModal(false);
   const [modalAddDocument, openModalAddDocument, closeModalAddDocument] = useModal(false);
-  
+
   const navigate = useNavigate();
 
 
@@ -124,11 +124,37 @@ const FormTramiteAdd = ({
 
   }
 
-  return (  
+  const searchSender = async () => {
+
+    const searchNroDocument=document.getElementById('search_nro_document');
+    const nroDocument=searchNroDocument.value.trim();
+
+    try {
+      if (nroDocument!="") {
+        const response = await fetch(`http://localhost:3000/remitente/getbynrodocument/${nroDocument}`);
+        const data = await response.json();
+        if (data) {
+          alertMessage('Búsqueda exitosa!', `El remitente ${data.sender_name+" "+data.paternal_surname+" "+data.maternal_surname} has sido encontrado`, 'success', 'OK', '#28A745');
+          setSender(data);
+          searchNroDocument.value='';
+        }else{
+          throw Error('No se ha encontrado remitente')
+        }
+        //console.log(data);
+      }else{
+        setSender(initialSenderDates);
+        throw Error('Ingrese Número de documento')
+      }
+    } catch (error) {
+      alertMessage('Error!', error, 'error', 'OK', '#d33');
+    }
+  }
+
+  return (
     <>
-    <button onClick={()=>{navigate('../lista')}}>
-      previos
-    </button>
+      <button onClick={() => { navigate('../lista') }}>
+        previos
+      </button>
       <main className="container">
 
         {/* sender modal */}
@@ -189,6 +215,7 @@ const FormTramiteAdd = ({
 
           <section className='col-12 col-lg-6 bg-white p-0 border border-1'>
 
+            {/* Procedure data */}
             <article className="row px-2">
               <h3 className='text-white bg-secondary p-1 fs-5'>Datos de Trámite</h3>
               <div className="col-8 d-flex align-items-center">
@@ -224,6 +251,7 @@ const FormTramiteAdd = ({
               </div>
             </article>
 
+            {/* Documents data */}
             <article className="row px-2">
               <h3 className='text-white bg-secondary p-1 fs-5'>Documentos</h3>
               <ListDocuments
@@ -247,11 +275,15 @@ const FormTramiteAdd = ({
 
           <section className='col-12 col-lg-6 bg-white p-0 border border-1'>
 
+            {/* Sender data */}
             <article className="row px-2">
               <h3 className='text-white bg-secondary p-1 fs-5'>Datos de remitente</h3>
               <div className="col-8 input-group mb-3">
-                <input required type="text" className="form-control" name='nro_document' id='nro_document' placeholder='Número de documento' onChange={handleChange} />
-                <button className="input-group-text">
+                <input required type="text" className="form-control" name='nro_document' id='search_nro_document' placeholder='Número de documento' />
+                <button
+                  className="input-group-text"
+                  onClick={searchSender}
+                >
                   <i className="bi bi-search"></i>
                 </button>
               </div>
@@ -274,7 +306,7 @@ const FormTramiteAdd = ({
               </div>
               <div className="col-12">
                 <strong className='text-primary'>Nro documento | Nombres y apellidos</strong>
-                <p>{sender.nro_document+' | '+sender.sender_name+' '+sender.paternal_surname+' '+sender.maternal_surname}</p>
+                <p>{sender.nro_document + ' | ' + sender.sender_name + ' ' + sender.paternal_surname + ' ' + sender.maternal_surname}</p>
               </div>
               <div className="col-4">
                 <strong className='text-primary'>Teléfono</strong>

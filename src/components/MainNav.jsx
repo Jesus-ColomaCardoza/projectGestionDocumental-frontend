@@ -2,8 +2,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { useContext } from 'react';
 import UserContext from '../contexts/UserContext';
 
-
-
 function MainNav() {
 
   const { user } = useContext(UserContext)
@@ -28,7 +26,7 @@ function MainNav() {
           <Link to="/home" className="nav-link">Inicio</Link>
         </li>
         <li className="nav-item d-none d-sm-inline-block">
-          <Link to="#" className="nav-link">Acerca de</Link>
+          <Link to="/home" className="nav-link">Acerca de</Link>
         </li>
       </ul>
 
@@ -37,9 +35,9 @@ function MainNav() {
 
         {/* <!-- Navbar Search --> */}
         <li className="nav-item">
-          <a className="nav-link" data-widget="navbar-search" href="#" role="button">
+          <p className="nav-link my-0">
             {user.Area.area_name}
-          </a>
+          </p>
         </li>
 
         {/* <!-- Notifications Dropdown Menu --> */}

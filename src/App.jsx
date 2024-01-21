@@ -16,8 +16,11 @@ function App() {
   return (
     <>
       <UserProvider>
+
         <BrowserRouter>
+
           <Routes>
+            
             <Route exact path='/' element={<Login />}></Route>
             
             <Route exact path='/' element={<PrivateRoute />}>
@@ -34,7 +37,9 @@ function App() {
             </Route>
 
           </Routes>
+          
         </BrowserRouter>
+
       </UserProvider>
     </>
   )

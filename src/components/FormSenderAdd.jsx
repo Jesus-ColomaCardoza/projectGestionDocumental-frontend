@@ -34,10 +34,10 @@ const FormSenderAdd = ({
   const handleChangeRadioButton = (e) => {
     setSender({ ...sender, [e.target.name]: e.target.value });
     const legalEntity = document.getElementById('legalEntity');
-    e.target.value == 'Persona jurídica' ? 
-    legalEntity.classList.remove('d-none') :
-    legalEntity.classList.add('d-none')
-    
+    e.target.value == 'Persona jurídica' ?
+      legalEntity.classList.remove('d-none') :
+      legalEntity.classList.add('d-none')
+
   }
   const addSender = async (e) => {
 
@@ -45,11 +45,23 @@ const FormSenderAdd = ({
 
     try {
 
+      const response = await fetch('http://localhost:3000/remitente/create/', {
+        method: 'POST',
+        body: JSON.stringify(sender),
+        headers: { 'Content-Type': "application/json" }
+      })
+
       setData(sender)
       //console.log(sender);
 
+      //reset el object senderDates
+      setSender(initialSenderDates);
+
+      //reset the form
+      e.target.reset();
+
       //we show the confirmed modal  
-      alertMessage('Registro exitoso!', 'El empleado has sido registrado', 'success', 'OK', '#28A745');
+      alertMessage('Registro exitoso!', 'El remitente has sido registrado', 'success', 'OK', '#28A745');
 
       //we close the modal window
       handleButton2();

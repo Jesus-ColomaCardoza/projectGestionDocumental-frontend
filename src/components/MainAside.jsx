@@ -14,7 +14,7 @@ function MainAside() {
     sidebarMini.classList.add('sidebar-collapse')
   })
 
-  const {user}=useContext(UserContext)
+  const { user } = useContext(UserContext)
 
   return (
 
@@ -32,9 +32,9 @@ function MainAside() {
           <div className="image d-flex">
             <img src={user.Empleado.profile_photo} className="img-circle elevation-2" alt="User Image" />
             <a href="#" id="userName" className="info">{
-            user.Empleado.employee_name+' '+
-            user.Empleado.paternal_surname+' '+
-            user.Empleado.maternal_surname
+              user.Empleado.employee_name + ' ' +
+              user.Empleado.paternal_surname + ' ' +
+              user.Empleado.maternal_surname
             }</a>
           </div>
 
@@ -50,30 +50,38 @@ function MainAside() {
                 <p>Trámite</p>
               </Link>
             </li>
-            <li className="nav-item">
-              <Link to="/home/usuario" className="nav-link">
-                <i className="nav-icon fas fa-user"></i>
-                <p>Usuario</p>
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link to="/home/empleado" className="nav-link">
-                <i className="nav-icon fas fa-users"></i>
-                <p>Empleado</p>
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link to="/home/area" className="nav-link">
-                <i className="nav-icon fas fa-th"></i>
-                <p>Área</p>
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link to="/home/tipodocumento" className="nav-link">
-                <i className="nav-icon fas fa-th"></i>
-                <p>Tipo de Documento</p>
-              </Link>
-            </li>
+            {
+              user.user_type == 'admin' ?
+                (
+                  <>
+                    <li className="nav-item">
+                      <Link to="/home/usuario" className="nav-link">
+                        <i className="nav-icon fas fa-user"></i>
+                        <p>Usuario</p>
+                      </Link>
+                    </li>
+                    <li className="nav-item">
+                      <Link to="/home/empleado" className="nav-link">
+                        <i className="nav-icon fas fa-users"></i>
+                        <p>Empleado</p>
+                      </Link>
+                    </li>
+                    <li className="nav-item">
+                      <Link to="/home/area" className="nav-link">
+                        <i className="nav-icon fas fa-th"></i>
+                        <p>Área</p>
+                      </Link>
+                    </li>
+                    <li className="nav-item">
+                      <Link to="/home/tipodocumento" className="nav-link">
+                        <i className="nav-icon fas fa-th"></i>
+                        <p>Tipo de Documento</p>
+                      </Link>
+                    </li>
+                  </>
+                )
+                : false
+            }
 
           </ul>
         </nav>

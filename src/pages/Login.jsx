@@ -37,34 +37,37 @@ const Login = () => {
     try {
       const response = await fetch(`http://localhost:3000/usuario/getLogin/${user.user_name}/${user.user_password}`);
       const data = await response.json();
-      // console.log(data);
+      //console.log(data);
 
-      if (data) {
-        let timerInterval;
-        Swal.fire({
-          title: "Bienvenido",
-          text: `Hola ${data.Empleado.employee_name + ' ' + data.Empleado.maternal_surname + ' ' + data.Empleado.paternal_surname}`,
-          timer: 1000,
-          timerProgressBar: true,
-          didOpen: () => {
-            Swal.showLoading();
-          },
-          willClose: () => {
-            clearInterval(timerInterval);
-          }
-        }).then((result) => {
-          if (result.dismiss === Swal.DismissReason.timer) {
-            //we load the data employee
-            handleUser(data);
-            //we update the autentication of user to true
-            handleAuth(true);
-            //we save the values in the localstorage
-            saveDataSessionStorage(data, true);
-          }
-        });
-
+      if (data) { //If user exits 
+        if (data.state == 'activo') { //if the state user is active
+          let timerInterval;
+          Swal.fire({
+            title: "Bienvenido",
+            text: `Hola ${data.Empleado.employee_name + ' ' + data.Empleado.maternal_surname + ' ' + data.Empleado.paternal_surname}`,
+            timer: 1000,
+            timerProgressBar: true,
+            didOpen: () => {
+              Swal.showLoading();
+            },
+            willClose: () => {
+              clearInterval(timerInterval);
+            }
+          }).then((result) => {
+            if (result.dismiss === Swal.DismissReason.timer) {
+              //we load the data employee
+              handleUser(data);
+              //we update the autentication of user to true
+              handleAuth(true);
+              //we save the values in the localstorage
+              saveDataSessionStorage(data, true);
+            }
+          });
+        } else {
+          throw Error('¡Usuario inactivo contacte con el administrador!')
+        }
       } else {
-        throw Error('Nombre de usuario o contraseña incorrecta')
+        throw Error('¡Nombre de usuario o contraseña incorrecta!')
       }
     } catch (error) {
       alertMessage('Error!', error, 'error', 'OK', '#d33');
