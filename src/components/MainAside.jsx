@@ -44,39 +44,65 @@ function MainAside() {
         <nav className="mt-2">
           <ul className="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
+            <li class="nav-header">ARCHIVOS DIGITALES</li>
+
+            <li className="nav-item">
+              <Link to="/home/tramite/lista" className="nav-link">
+                <i className="nav-icon fas fa-book"></i>
+                <p>Documentos de área</p>
+              </Link>
+            </li>
+
+            <li class="nav-header">TRÁMITES</li>
+
             <li className="nav-item">
               <Link to="/home/tramite/lista" className="nav-link">
                 <i className="nav-icon fas fa-book"></i>
                 <p>Trámite</p>
               </Link>
             </li>
+
             {
               user.user_type == 'admin' ?
                 (
                   <>
-                    <li className="nav-item">
-                      <Link to="/home/usuario" className="nav-link">
-                        <i className="nav-icon fas fa-user"></i>
-                        <p>Usuario</p>
-                      </Link>
-                    </li>
-                    <li className="nav-item">
-                      <Link to="/home/empleado" className="nav-link">
-                        <i className="nav-icon fas fa-users"></i>
-                        <p>Empleado</p>
-                      </Link>
-                    </li>
-                    <li className="nav-item">
-                      <Link to="/home/area" className="nav-link">
-                        <i className="nav-icon fas fa-th"></i>
-                        <p>Área</p>
-                      </Link>
-                    </li>
-                    <li className="nav-item">
-                      <Link to="/home/tipodocumento" className="nav-link">
-                        <i className="nav-icon fas fa-th"></i>
-                        <p>Tipo de Documento</p>
-                      </Link>
+                    <li class="nav-header">CONFIGURACIÓN</li>
+
+                    <li class="nav-item">
+                      <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>
+                          Mantenimiento
+                          <i class="right fas fa-angle-left"></i>
+                        </p>
+                      </a>
+
+                      <ul class="nav nav-treeview">
+                        <li className="nav-item">
+                          <Link to="/home/usuario" className="nav-link">
+                            <i className="nav-icon fas fa-user"></i>
+                            <p>Usuario</p>
+                          </Link>
+                        </li>
+                        <li className="nav-item">
+                          <Link to="/home/empleado" className="nav-link">
+                            <i className="nav-icon fas fa-users"></i>
+                            <p>Empleado</p>
+                          </Link>
+                        </li>
+                        <li className="nav-item">
+                          <Link to="/home/area" className="nav-link">
+                            <i className="nav-icon fas fa-th"></i>
+                            <p>Área</p>
+                          </Link>
+                        </li>
+                        <li className="nav-item">
+                          <Link to="/home/tipodocumento" className="nav-link">
+                            <i className="nav-icon fas fa-th"></i>
+                            <p>Tipo de Documento</p>
+                          </Link>
+                        </li>
+                      </ul>
                     </li>
                   </>
                 )

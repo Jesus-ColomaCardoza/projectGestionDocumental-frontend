@@ -17,7 +17,9 @@
     left: 0;
 }
 .custom-fixed{
+    height: 100vh !important;
     position:fixed !important;
+    overflow-y: hidden;
 }
 .custom-fixed--top{
     position: sticky !important;

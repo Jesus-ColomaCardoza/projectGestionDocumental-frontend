@@ -16,8 +16,8 @@ const FormUserUpdate = ({
   const initialUserDates = {
     user_name: '',
     user_password: '',
-    empleado_id: '',
-    area_id: '',
+    id_employee: '',
+    id_area: '',
     user_type: ''
   }
   const [user, setUser] = useState(initialUserDates);
@@ -73,7 +73,7 @@ const FormUserUpdate = ({
         </div>
         <div className="col-md-12">
           <label className="form-label">Empleado</label>
-          <select className="form-select" name='empleado_id' onChange={handleChange} value={user.empleado_id}>
+          <select className="form-select" name='id_employee' onChange={handleChange} value={user.id_employee}>
             <option disabled key={-1} value={-1}>Seleccionar empleado</option>
             {
               stateEmployees.map((employee) => {
@@ -84,7 +84,7 @@ const FormUserUpdate = ({
         </div>
         <div className="col-md-6">
           <label className="form-label">Area</label>
-          <select className="form-select" name='area_id' onChange={handleChange} value={user.area_id}>
+          <select className="form-select" name='id_area' onChange={handleChange} value={user.id_area}>
             <option disabled key={-1} value={-1}>Seleccionar área</option>
             {
               stateAreas.map((area) => {
