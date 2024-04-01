@@ -20,7 +20,7 @@ function App() {
         <BrowserRouter>
 
           <Routes>
-            
+            {/* change route */}
             <Route exact path='/' element={<Login />}></Route>
             
             <Route exact path='/' element={<PrivateRoute />}>

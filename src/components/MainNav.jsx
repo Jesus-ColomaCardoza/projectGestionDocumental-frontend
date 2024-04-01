@@ -36,7 +36,7 @@ function MainNav() {
         {/* <!-- Navbar Search --> */}
         <li className="nav-item">
           <p className="nav-link my-0">
-            {user.Area.area_name}
+            {user.Empleado.Area.area_name}
           </p>
         </li>
 

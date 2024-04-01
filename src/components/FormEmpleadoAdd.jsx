@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { alertMessage } from '../libraries/alertMessage';
+import { Select2 } from './Select2';
 import defaultPhoto from '../assets/media/img/defaultPhoto.png'
 import '../stylesheets/FormEmpleadoAdd.css'
 
@@ -10,6 +11,8 @@ const FormEmpleadoAdd = ({
   typeButton2,
   handleButton2,
   handleTable,
+  stateAreas
+
 }) => {
 
   const initialEmployeeDates = {
@@ -54,7 +57,7 @@ const FormEmpleadoAdd = ({
     e.preventDefault();
 
     try {
-      if (photo==null && temporalPhoto==defaultPhoto) {
+      if (photo == null && temporalPhoto == defaultPhoto) {
         throw new Error('Seleccione foto de perfil');
       }
 
@@ -105,13 +108,38 @@ const FormEmpleadoAdd = ({
           </div>
         </div>
         <div className="col-md-7">
-          <div className="col-md-12 mb-2">
-            <label htmlFor="nro_document" className="">Nro Documento</label>
-            <input required type="text" className="form-control" name='nro_document' id='nro_document' onChange={handleChange} />
+          <div className="row">
+            <div className="col-md-6 mb-2">
+              <Select2
+                label='Área'
+                inputName='id_area'
+                handleChange={handleChange}
+                data={stateAreas}
+                attribute='area_name'
+              />
+            </div>
+            {/* editar */}
+            <div className="col-md-6 mb-2">
+              <label className="form-label">Rol</label>
+              <select className="form-select" name='id_rol' onChange={handleChange} defaultValue={-1}>
+                <option disabled key={-1} value={-1}>Seleccionar rol</option>
+                {
+                  stateAreas.map((area) => {
+                    return <option key={area.id} value={area.id} >{area.area_name}</option>
+                  })
+                }
+              </select>
+            </div>
           </div>
-          <div className="col-md-12 mb-2">
-            <label htmlFor="inputEmail4" className="form-label">Nombres</label>
-            <input required type="text" className="form-control" name='employee_name' onChange={handleChange} />
+          <div className="row">
+            <div className="col-md-6 mb-2">
+              <label htmlFor="nro_document" className="">Nro Documento</label>
+              <input required type="text" className="form-control" name='nro_document' id='nro_document' onChange={handleChange} />
+            </div>
+            <div className="col-md-6 mb-2">
+              <label htmlFor="inputEmail4" className="form-label">Nombres</label>
+              <input required type="text" className="form-control" name='employee_name' onChange={handleChange} />
+            </div>
           </div>
           <div className="col-md-12 mb-2">
             <label htmlFor="inputEmail4" className="form-label">Apellido Paterno</label>

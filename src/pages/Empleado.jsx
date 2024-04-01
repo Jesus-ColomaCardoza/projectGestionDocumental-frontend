@@ -22,6 +22,9 @@ const Empleado = () => {
   const [modalAddEmployee, openModalAddEmployee, closeModalAddEmployee] = useModal(false);
   const [modalUpdateEmployee, openModalUpdateEmployee, closeModalUpdateEmployee] = useModal(false);
 
+  const [areas, setAreas] = useState([]);
+
+
 
   const loadEmployeeByName = async () => {
     if (employeeName !== '') {
@@ -44,6 +47,12 @@ const Empleado = () => {
     setEmployees(data);
     initialStateEmployees = [...data]
     // console.log(initialStateEmployees);
+  }
+  const loadAreas = async () => {
+    const response = await fetch('http://localhost:3000/area/getlist/');
+    const data = await response.json();
+    setAreas(data);
+    console.log(data);
   }
 
   const deleteEmployee = async (id, image) => {
@@ -79,6 +88,7 @@ const Empleado = () => {
 
   useEffect(() => { loadEmployees() }, []);
   useEffect(() => { loadEmployeeByName() }, [employeeName]);
+  useEffect(() => { loadAreas() }, []);
 
   return (
 
@@ -99,6 +109,8 @@ const Empleado = () => {
           typeButton2='secondary'
           handleButton2={closeModalAddEmployee}
           handleTable={loadEmployees}
+          stateAreas={areas}
+
         />
       </Modal>
 
