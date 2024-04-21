@@ -170,8 +170,7 @@ const Usuario = () => {
               <tr>
                 <th scope="col">#</th>
                 <th scope="col">Usuario</th>
-                <th scope="col">Área</th>
-                <th scope="col">Rol</th>
+                <th scope="col">Tipo Usuario</th>
                 <th scope="col">Empleado</th>
                 <th scope="col">Estatus</th>
                 <th scope="col">Optiones</th>
@@ -184,8 +183,7 @@ const Usuario = () => {
                     <tr key={user.id}>
                       <th scope="row">{index + 1}</th>
                       <td>{user.user_name}</td>
-                      <td>{user.Area.area_name}</td>
-                      <td>{user.user_type}</td>
+                      <td>{user.TipoUsuario.description}</td>
                       <td className='text-break'>{
                         user.Empleado.employee_name + ' ' +
                         user.Empleado.paternal_surname + ' ' +

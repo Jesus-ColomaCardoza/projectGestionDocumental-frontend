@@ -3,6 +3,7 @@ import { alertMessage } from '../libraries/alertMessage';
 import { Select2 } from './Select2';
 import defaultPhoto from '../assets/media/img/defaultPhoto.png'
 import '../stylesheets/FormEmpleadoAdd.css'
+import { useArea } from '../hookscustom/useArea';
 
 const FormEmpleadoAdd = ({
   textButton1,
@@ -94,6 +95,8 @@ const FormEmpleadoAdd = ({
     }
   }
 
+
+
   return (
     <>
       <form className="row g-3" encType="multipart/form-data" onSubmit={addEmployee}>
@@ -118,17 +121,15 @@ const FormEmpleadoAdd = ({
                 attribute='area_name'
               />
             </div>
-            {/* editar */}
+            {/* editar with role*/}
             <div className="col-md-6 mb-2">
-              <label className="form-label">Rol</label>
-              <select className="form-select" name='id_rol' onChange={handleChange} defaultValue={-1}>
-                <option disabled key={-1} value={-1}>Seleccionar rol</option>
-                {
-                  stateAreas.map((area) => {
-                    return <option key={area.id} value={area.id} >{area.area_name}</option>
-                  })
-                }
-              </select>
+              <Select2
+                label='Cargo'
+                inputName='id_role'
+                handleChange={handleChange}
+                data={stateAreas}
+                attribute='description'
+              />
             </div>
           </div>
           <div className="row">

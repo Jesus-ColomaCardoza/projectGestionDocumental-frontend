@@ -63,7 +63,7 @@ function MainAside() {
             </li>
 
             {
-              user.user_type == 'admin' ?
+              user.user_type == 2 ?
                 (
                   <>
                     <li class="nav-header">CONFIGURACIÓN</li>

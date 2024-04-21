@@ -9,6 +9,7 @@ import FormEmpleadoAdd from '../components/FormEmpleadoAdd';
 import FormEmpleadoUpdate from '../components/FormEmpleadoUpdate';
 import { alertMessage } from '../libraries/alertMessage';
 import { removeDomain } from '../libraries/application';
+import { useArea } from '../hookscustom/useArea';
 
 let initialStateEmployees;
 
@@ -22,8 +23,7 @@ const Empleado = () => {
   const [modalAddEmployee, openModalAddEmployee, closeModalAddEmployee] = useModal(false);
   const [modalUpdateEmployee, openModalUpdateEmployee, closeModalUpdateEmployee] = useModal(false);
 
-  const [areas, setAreas] = useState([]);
-
+  const [areas,loadAreas]=useArea([]);
 
 
   const loadEmployeeByName = async () => {
@@ -47,12 +47,6 @@ const Empleado = () => {
     setEmployees(data);
     initialStateEmployees = [...data]
     // console.log(initialStateEmployees);
-  }
-  const loadAreas = async () => {
-    const response = await fetch('http://localhost:3000/area/getlist/');
-    const data = await response.json();
-    setAreas(data);
-    console.log(data);
   }
 
   const deleteEmployee = async (id, image) => {
