@@ -1,69 +1,26 @@
 :root{
-    --greenBootstrap:#28A745;
-    --redBootstrap:#DC3545;
-    --blackfont:#F4F6F9;
+  --greenBootstrap:#28A745;
+  --redBootstrap:#DC3545;
+  --blackfont:#F4F6F9;
+}
 
-}
-.custom-scroll{
-    height: 45vh;
-    overflow-y: auto;    
-}
-/* .dd{
-    width: auto;
-} */
-.custom-sticky{
-    position:sticky;
-    top: -.1em;
-    left: 0;
-}
-.custom-fixed{
-    height: 100vh !important;
-    position:fixed !important;
-    overflow-y: hidden;
-}
-.custom-fixed--top{
-    position: sticky !important;
-    top: 0;
-    right: 0;
+/*custom text */
+.text--white{
+  color: #fff;
 }
 
 /* highlighter */
 .highlighter{
-    padding: .15em .5em;
-    border-radius: .5em;
-    font-weight: bold;
+  padding: .15em .5em;
+  border-radius: .5em;
+  font-weight: bold;
 }
 .highlighter--green{
-    color: #fff;
-    background-color: var(--greenBootstrap);
+  color: #fff;
+  background-color: var(--greenBootstrap);
 }
 .highlighter--red{
-    color: #fff;
-    background-color: var(--redBootstrap);
+  color: #fff;
+  background-color: var(--redBootstrap);
 }
 
-/* color custom text */
-.text--white{
-    color: #fff;
-}
-
-/* container */
-.container{
-    min-height: 90vh;
-}
-.container-list{
-    margin: 0 2em;
-    background-color: #fff;
-}
-.container-list__h2{
-    padding: .3em 1em;
-}
-
-/* tables */
-.table-primary{
-    background-color: #aaa;
-}
-
-img{
-    max-width: 100%;
-}
